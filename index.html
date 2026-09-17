@@ -144,6 +144,7 @@ a{color:inherit;text-decoration:none}
 
 .img-card{background:var(--surface);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s;cursor:pointer;display:flex;flex-direction:column;position:relative;text-align:left}
 .img-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--border-2)}
+.img-card.selected{border-color:var(--green);box-shadow:0 0 0 2px var(--green),var(--shadow-lg)}
 .img-card-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2)}
 .img-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .img-card:hover .img-card-media img{transform:scale(1.06)}
@@ -153,6 +154,27 @@ a{color:inherit;text-decoration:none}
 .img-card .pending-chip{position:absolute;top:10px;left:10px;z-index:2;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;background:rgba(255,255,255,.96);border-radius:999px;font-size:11px;font-weight:800;color:#D97706}
 .img-card .dist-chip{position:absolute;bottom:10px;left:10px;z-index:2;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border-radius:999px;font-size:11px;font-weight:700;color:#fff}
 .img-card .promo-chip{position:absolute;top:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px;background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff;border-radius:999px;font-size:10.5px;font-weight:900;letter-spacing:.3px;box-shadow:0 4px 12px rgba(34,197,94,.5)}
+
+/* COMPARE CHECK BUTTON — top-right of card */
+.compare-check{
+  position:absolute;top:10px;right:10px;z-index:3;
+  display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(10px);
+  border-radius:999px;font-size:11px;font-weight:800;color:#fff;
+  border:1.5px solid rgba(255,255,255,.25);
+  transition:all .2s;cursor:pointer;
+}
+.compare-check:hover{background:rgba(0,0,0,.8);transform:scale(1.03)}
+.compare-check .cc-box{
+  width:15px;height:15px;border-radius:4px;border:2px solid rgba(255,255,255,.7);
+  display:grid;place-items:center;transition:all .2s;flex:none;
+}
+.compare-check .cc-box svg{opacity:0;transform:scale(.5);transition:all .2s;color:#fff}
+.compare-check.on{background:linear-gradient(135deg,var(--green),var(--green-2));border-color:transparent;box-shadow:0 6px 16px -6px rgba(34,197,94,.7)}
+.compare-check.on .cc-box{background:#fff;border-color:#fff;color:var(--green)}
+.compare-check.on .cc-box svg{opacity:1;transform:none;color:var(--green)}
+.compare-check.on:hover{filter:brightness(1.08)}
+
 .img-card-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
 .img-card-cat{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--green);margin-bottom:5px}
 [data-theme="dark"] .img-card-cat{color:#4ADE80}
@@ -209,6 +231,186 @@ a{color:inherit;text-decoration:none}
 .promo-text b{display:block;font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:3px}
 .promo-text span{font-size:13px;color:var(--muted);font-weight:500;line-height:1.5}
 .promo-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:linear-gradient(135deg,var(--green),var(--green-2));color:#fff}
+
+/* ===== CATEGORY COMPARE BAR ===== */
+.cat-compare-bar{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:14px 18px;margin-bottom:26px;
+  transition:all .3s var(--ease);
+}
+.cat-compare-bar.hidden{display:none}
+.cat-compare-info{
+  display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text);flex-wrap:wrap;
+}
+.cat-compare-info b{color:var(--green);font-weight:900}
+.cat-compare-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+.cat-compare-chip{
+  display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 8px 0 12px;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:999px;
+  font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;
+  transition:all .2s;
+}
+.cat-compare-chip img{width:20px;height:20px;border-radius:50%;object-fit:cover;flex:none}
+.cat-compare-chip .rm{
+  width:20px;height:20px;border-radius:50%;background:var(--surface);
+  display:grid;place-items:center;color:var(--muted);cursor:pointer;transition:all .2s;
+}
+.cat-compare-chip .rm:hover{background:#EF4444;color:#fff}
+.cat-compare-actions{display:flex;gap:8px;margin-left:auto}
+.cat-compare-actions .btn{height:38px;padding:0 16px;font-size:13px}
+@media(max-width:640px){
+  .cat-compare-actions{width:100%;margin-left:0}
+  .cat-compare-actions .btn{flex:1;justify-content:center}
+}
+
+/* ===== COMPARISON MODAL ===== */
+.compare-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);
+  z-index:350;opacity:0;pointer-events:none;transition:opacity .3s;
+  display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;
+}
+.compare-backdrop.on{opacity:1;pointer-events:auto}
+.compare-modal{
+  background:var(--surface);border-radius:var(--r-xl);width:100%;max-width:1200px;
+  max-height:94vh;overflow-y:auto;position:relative;
+  transform:translateY(24px) scale(.97);transition:transform .4s var(--ease);
+  box-shadow:var(--shadow-xl);border:1px solid var(--border);
+}
+.compare-backdrop.on .compare-modal{transform:none}
+.compare-header{
+  position:sticky;top:0;z-index:10;background:var(--surface);
+  padding:22px 28px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-radius:var(--r-xl) var(--r-xl) 0 0;
+}
+.compare-header h2{
+  font-family:var(--font-display);font-size:20px;font-weight:800;
+  letter-spacing:-.7px;color:var(--text);
+}
+.compare-header .sub{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px}
+.compare-header .actions{display:flex;gap:10px;align-items:center}
+.compare-close{
+  width:38px;height:38px;border-radius:11px;background:var(--surface-2);
+  display:grid;place-items:center;color:var(--text);transition:all .2s;
+}
+.compare-close:hover{background:#EF4444;color:#fff;transform:rotate(90deg)}
+
+/* Comparison table */
+.compare-scroll{padding:22px 28px 32px;overflow-x:auto}
+.compare-table{
+  width:100%;border-collapse:separate;border-spacing:0;min-width:600px;
+}
+.compare-table th, .compare-table td{
+  padding:14px 16px;text-align:left;vertical-align:top;
+  border-bottom:1px solid var(--border-2);font-size:13.5px;
+}
+.compare-table thead th{
+  position:sticky;top:0;background:var(--surface-2);z-index:2;
+  border-bottom:2px solid var(--border);
+}
+.compare-table thead th:first-child{
+  background:var(--surface-2);border-radius:14px 0 0 0;
+}
+.compare-table thead th:last-child{border-radius:0 14px 0 0}
+.compare-table tbody tr:last-child td{border-bottom:0}
+.compare-table .row-label{
+  font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;
+  color:var(--muted-2);width:150px;background:var(--surface-2);
+  border-right:1px solid var(--border);white-space:nowrap;
+}
+.compare-table tbody td{color:var(--text-2);font-weight:600}
+.compare-table tbody td.highlight{color:var(--text);font-weight:800}
+.compare-table tbody td.best{color:var(--green);font-weight:800}
+[data-theme="dark"] .compare-table tbody td.best{color:#4ADE80}
+.compare-table tbody td.best::before{
+  content:'★ ';font-size:11px;vertical-align:2px;
+}
+
+/* Provider header cell */
+.compare-provider-head{text-align:center;min-width:180px;padding:16px 12px !important}
+.compare-provider-head .cph-img{
+  width:100%;height:96px;border-radius:12px;object-fit:cover;
+  margin-bottom:10px;background:var(--surface-3);
+}
+.compare-provider-head .cph-name{
+  font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.3px;
+  line-height:1.25;margin-bottom:4px;
+}
+.compare-provider-head .cph-cat{
+  font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--green);margin-bottom:8px;
+}
+[data-theme="dark"] .compare-provider-head .cph-cat{color:#4ADE80}
+.compare-provider-head .cph-rating{
+  display:inline-flex;align-items:center;gap:5px;font-size:12px;
+  color:var(--text-2);font-weight:700;
+}
+.compare-provider-head .cph-rating .stars{color:var(--gold);letter-spacing:-1px}
+.compare-provider-head .cph-verified{
+  display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;
+  background:rgba(34,197,94,.14);color:var(--green-2);border-radius:999px;
+  font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;
+  margin-top:6px;
+}
+[data-theme="dark"] .compare-provider-head .cph-verified{color:#4ADE80}
+.compare-provider-head .cph-remove{
+  display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
+  color:var(--muted);margin-top:10px;padding:4px 8px;border-radius:6px;
+  transition:all .2s;cursor:pointer;
+}
+.compare-provider-head .cph-remove:hover{background:rgba(239,68,68,.1);color:#EF4444}
+
+/* Tag list inside table */
+.tag-list{display:flex;flex-wrap:wrap;gap:5px}
+.tag-list .t{
+  font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;
+  background:var(--surface-2);color:var(--text-2);white-space:nowrap;
+}
+
+/* Course mini-row */
+.mini-course{
+  display:flex;flex-direction:column;gap:6px;
+}
+.mini-course .mc{
+  padding:8px 10px;background:var(--surface-2);border-radius:8px;
+  font-size:12px;line-height:1.4;
+}
+.mini-course .mc b{display:block;color:var(--text);font-weight:800;margin-bottom:2px}
+.mini-course .mc span{color:var(--muted);font-weight:600;font-size:11px}
+
+/* Instructor mini */
+.instructor-mini{
+  display:flex;align-items:center;gap:10px;padding:6px 0;
+}
+.instructor-mini img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex:none;border:2px solid var(--surface-2)}
+.instructor-mini .im-info{min-width:0}
+.instructor-mini .im-info b{display:block;font-size:12.5px;font-weight:800;color:var(--text);line-height:1.2}
+.instructor-mini .im-info span{font-size:10.5px;color:var(--muted);font-weight:600}
+
+/* Best value banner at bottom of comparison */
+.compare-summary{
+  margin-top:22px;padding:20px 22px;border-radius:var(--r-lg);
+  background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.03));
+  border:1px solid rgba(34,197,94,.3);
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.compare-summary .cs-icon{
+  width:44px;height:44px;border-radius:13px;flex:none;
+  background:linear-gradient(135deg,var(--green),var(--green-2));color:#fff;
+  display:grid;place-items:center;
+}
+.compare-summary .cs-text{flex:1;min-width:200px}
+.compare-summary .cs-text b{display:block;font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.compare-summary .cs-text span{font-size:12.5px;color:var(--text-2);line-height:1.5}
+
+@media(max-width:720px){
+  .compare-header{padding:18px 20px}
+  .compare-header h2{font-size:17px}
+  .compare-scroll{padding:18px 20px 26px}
+  .compare-table th, .compare-table td{padding:12px 12px}
+  .compare-table .row-label{width:100px;font-size:10px}
+}
 
 .search-hero{background:var(--hero-grad);position:relative;overflow:hidden;padding:44px 24px 32px;color:#fff}
 .search-hero::before{content:'';position:absolute;inset:0;opacity:.5;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:22px 22px}
@@ -382,7 +584,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 @media(max-width:820px){.footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
 @media(max-width:520px){.footer-grid{grid-template-columns:1fr}}
 
-/* ============ MODAL (ENHANCED) ============ */
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
 .modal-backdrop.on{opacity:1;pointer-events:auto}
 .modal{background:var(--surface);border-radius:var(--r-xl);width:100%;max-width:820px;max-height:92vh;overflow-y:auto;position:relative;transform:translateY(24px) scale(.97);transition:transform .35s var(--ease);box-shadow:var(--shadow-xl);margin:auto;border:1px solid var(--border)}
@@ -413,12 +614,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 
 .modal-tab-content{padding:22px 28px 28px}
 
-/* COURSES TAB */
-.course-card{
-  display:flex;align-items:center;gap:16px;padding:16px 18px;
-  border-radius:14px;border:1.5px solid var(--border);background:var(--surface-2);
-  cursor:pointer;transition:all .2s;margin-bottom:10px;
-}
+.course-card{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:14px;border:1.5px solid var(--border);background:var(--surface-2);cursor:pointer;transition:all .2s;margin-bottom:10px}
 .course-card:hover{border-color:var(--green);background:var(--surface);transform:translateX(2px)}
 .course-card.on{border-color:var(--green);background:var(--surface);box-shadow:0 0 0 3px rgba(34,197,94,.15)}
 .course-radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--border-2);flex:none;display:grid;place-items:center;transition:all .2s}
@@ -431,21 +627,11 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .course-price{font-size:17px;font-weight:900;color:var(--text);white-space:nowrap;letter-spacing:-.5px}
 .course-price small{display:block;font-size:10.5px;color:var(--muted-2);text-align:right;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
 
-/* INSTRUCTORS TAB */
 .instructors-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.instructor-card{
-  background:var(--surface-2);border:1px solid var(--border);border-radius:16px;
-  padding:18px;transition:all .25s var(--ease);cursor:pointer;
-}
+.instructor-card{background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:18px;transition:all .25s var(--ease);cursor:pointer}
 .instructor-card:hover{transform:translateY(-3px);border-color:var(--border-2);box-shadow:var(--shadow)}
 .instructor-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
-.instructor-avatar{
-  width:60px;height:60px;border-radius:50%;flex:none;
-  background:linear-gradient(135deg,#3B82F6,#8B5CF6);
-  display:grid;place-items:center;overflow:hidden;
-  border:2px solid var(--surface);
-  box-shadow:0 6px 16px -6px rgba(0,0,0,.4);
-}
+.instructor-avatar{width:60px;height:60px;border-radius:50%;flex:none;background:linear-gradient(135deg,#3B82F6,#8B5CF6);display:grid;place-items:center;overflow:hidden;border:2px solid var(--surface);box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
 .instructor-avatar img{width:100%;height:100%;object-fit:cover}
 .instructor-info{flex:1;min-width:0}
 .instructor-info b{display:block;font-size:14.5px;font-weight:800;color:var(--text);letter-spacing:-.3px;line-height:1.2}
@@ -459,11 +645,8 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .cert-pill{font-size:10px;font-weight:900;letter-spacing:.3px;padding:4px 9px;border-radius:999px;background:var(--gold-soft,rgba(255,201,60,.14));color:#B45309;text-transform:uppercase}
 [data-theme="dark"] .cert-pill{background:rgba(255,201,60,.14);color:var(--gold)}
 
-@media(max-width:720px){
-  .instructors-grid{grid-template-columns:1fr}
-}
+@media(max-width:720px){.instructors-grid{grid-template-columns:1fr}}
 
-/* ENROLLMENT FORM */
 .modal-enroll{padding:8px 28px 32px;border-top:1px solid var(--border);margin-top:0}
 .enroll-head{padding:22px 0 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .enroll-head h4{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.4px}
@@ -580,9 +763,10 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   <div class="section" style="padding-top:52px">
     <div id="catPromo"></div>
     <div class="section-head">
-      <div><h2>Most trusted providers</h2><p id="catRankSub">Ranked by verification status, learner rating, and review volume.</p></div>
+      <div><h2>Most trusted providers</h2><p id="catRankSub">Select 2–4 providers below to compare them side-by-side.</p></div>
       <button class="link-arrow" onclick="go('search')">All providers <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
+    <div class="cat-compare-bar hidden" id="catCompareBar"></div>
     <div class="providers-grid" id="catRankList"></div>
   </div>
 </section>
@@ -670,6 +854,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 </footer>
 
 <div class="modal-backdrop" id="modalBackdrop" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalContent"></div></div>
+<div class="compare-backdrop" id="compareBackdrop" onclick="if(event.target===this)closeCompare()"><div class="compare-modal" id="compareModalContent"></div></div>
 <div class="toast" id="toast"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="toastMsg"></span></div>
 
 <script>
@@ -677,7 +862,7 @@ function applyTheme(t){document.documentElement.setAttribute('data-theme',t);try
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');applyTheme(c==='dark'?'light':'dark')}
 (function(){let s;try{s=localStorage.getItem('edufinder-theme')}catch(e){}if(!s){s=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}applyTheme(s)})();
 
-const ICONS={code:'<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',cloud:'<path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.7-1.7A4 4 0 0 0 6.5 19Z"/>',chip:'<rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>',briefcase:'<rect x="2" y="7" width="20" height="14" rx="2.5"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 13h20"/>',chart:'<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/>',megaphone:'<path d="M3 11v2a2 2 0 0 0 2 2h2l5 4V5L7 9H5a2 2 0 0 0-2 2Z"/>',medical:'<path d="M12 2v20M2 12h20"/><rect x="2" y="2" width="20" height="20" rx="5" opacity=".25"/>',heart:'<path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7Z"/>',bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/>',wrench:'<path d="M15.6 3a5.5 5.5 0 0 0-5.2 7.3L3 17.7 6.3 21l7.4-7.4A5.5 5.5 0 0 0 21 8.4L17.4 12 15 9.6 18.6 6A5.5 5.5 0 0 0 15.6 3Z"/>',scissors:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/>',palette:'<path d="M12 22a10 10 0 1 1 10-10c0 2.5-2 4-4.5 4H16a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22Z"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z"/>',scales:'<path d="M12 3v18M7 21h10"/><path d="M5 7h14l-2 6a3 3 0 0 1-6 0L9 7"/>',book:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5V4.5Z"/>',plane:'<path d="M2 13.5 21 4l-6 17-3.6-6.6L2 13.5Z"/>',dumbbell:'<path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/>',truck:'<path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>'};
+const ICONS={code:'<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',cloud:'<path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.7-1.7A4 4 0 0 0 6.5 19Z"/>',chip:'<rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>',briefcase:'<rect x="2" y="7" width="20" height="14" rx="2.5"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 13h20"/>',chart:'<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/>',megaphone:'<path d="M3 11v2a2 2 0 0 0 2 2h2l5 4V5L7 9H5a2 2 0 0 0-2 2Z"/>',medical:'<path d="M12 2v20M2 12h20"/><rect x="2" y="2" width="20" height="20" rx="5" opacity=".25"/>',heart:'<path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7Z"/>',bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/>',wrench:'<path d="M15.6 3a5.5 5.5 0 0 0-5.2 7.3L3 17.7 6.3 21l7.4-7.4A5.5 5.5 0 0 0 21 8.4L17.4 12 15 9.6 18.6 6A5.5 5.5 0 0 0 15.6 3Z"/>',scissors:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/>',palette:'<path d="M12 22a10 10 0 1 1 10-10c0 2.5-2 4-4.5 4H16a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22Z"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z"/>',scales:'<path d="M12 3v18M7 21h10"/><path d="M5 7h14l-2 6a3 3 0 0 1-6 0L9 7"/>',book:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5V4.5Z"/>',plane:'<path d="M2 13.5 21 4l-6 17-3.6-6.6L2 13.5Z"/>',dumbbell:'<path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/>',truck:'<path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',scale:'<path d="M12 3v18M7 21h10"/><path d="M5 7h14l-2 6a3 3 0 0 1-6 0L9 7"/>',users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',tag:'<path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><circle cx="7" cy="7" r="1.5"/>'};
 function icon(n,s=24,sw=1.8){return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]||''}</svg>`}
 
 const IMG={
@@ -715,7 +900,6 @@ const IMG={
   gym:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=80'
 };
 
-/* Instructor avatars - professional headshots */
 const AVATARS=[
   'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&auto=format&fit=crop&q=80',
   'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&auto=format&fit=crop&q=80',
@@ -787,11 +971,11 @@ instructors:[
 {id:'onlc',name:'ONLC Training Centers',category:'cyber',icon:'shield',c1:'#DC2626',c2:'#7F1D1D',img:IMG.hacker,rating:4.7,reviews:142,price:2495,lat:27.9506,lng:-82.4572,verified:true,format:'online',address:'Tampa, FL (virtual instructor-led)',desc:'Instructor-led cybersecurity certification training in Tampa with live online classes and hands-on labs.',courses:[{name:'CompTIA Security+',duration:'5 days',price:2495,mode:'Online'},{name:'CompTIA CySA+',duration:'5 days',price:2695,mode:'Online'}],
 instructors:[
 {name:'Thomas Wright',title:'Cybersecurity Curriculum Lead',avatar:av(11),bio:'20 years in information security across healthcare and finance. Leads the CySA+ and Security+ curriculum at ONLC.',exp:'20 yrs',rating:4.7,students:720,certs:['CISSP','CySA+']},
-{name:'Monica Alvarez',title:'Security Operations Instructor',avatar:av(0),bio:'Former SOC manager with hands-on experience in threat detection and incident response. Specializes in analyst-level training.',exp:'9 yrs',rating:4.8,students:340,certs:['GCIA','Security+']}
+{name:'Monica Alvarez',title:'Security Operations Instructor',avatar:av(0),bio:'Former SOC manager with hands-on experience in threat detection and incident response.',exp:'9 yrs',rating:4.8,students:340,certs:['GCIA','Security+']}
 ]},
 {id:'4g',name:'4Geeks Academy Tampa',category:'cloud',icon:'cloud',c1:'#0EA5E9',c2:'#0369A1',img:IMG.coding_screen,rating:4.7,reviews:176,price:10900,lat:27.9506,lng:-82.4572,verified:true,format:'hybrid',address:'Tampa, FL',desc:'Coding bootcamp training students for in-demand tech roles including AI engineering. Live instruction, career support, and a 24-week program.',courses:[{name:'Full-Stack Software Development',duration:'24 weeks',price:10900,mode:'Hybrid'},{name:'AI Engineering Bootcamp',duration:'24 weeks',price:12900,mode:'Hybrid'}],
 instructors:[
-{name:'Alejandro Rivas',title:'Lead Bootcamp Instructor',avatar:av(1),bio:'Full-stack engineer and bootcamp instructor with a passion for teaching career changers. Previously at MercadoLibre and Rappi.',exp:'10 yrs',rating:4.8,students:460,certs:['AWS','React']},
+{name:'Alejandro Rivas',title:'Lead Bootcamp Instructor',avatar:av(1),bio:'Full-stack engineer and bootcamp instructor with a passion for teaching career changers.',exp:'10 yrs',rating:4.8,students:460,certs:['AWS','React']},
 {name:'Nina Kowalski',title:'AI Engineering Instructor',avatar:av(2),bio:'Data scientist and ML engineer. Teaches Python, LLM integration, and modern AI application development.',exp:'8 yrs',rating:4.7,students:210,certs:['TensorFlow','Python']}
 ]},
 {id:'rev',name:'Revature',category:'cloud',icon:'cloud',c1:'#0284C7',c2:'#075985',img:IMG.cloud_servers,rating:4.5,reviews:98,price:0,originalPrice:0,discount:100,discountLabel:'Paid training',lat:27.9506,lng:-82.4572,verified:true,format:'inperson',address:'USF Campus, Tampa',desc:'Revature hosts coding bootcamps on the USF campus. Students receive intensive training in enterprise-level technologies with a path to employment.',courses:[{name:'Enterprise Software Development',duration:'12 weeks',price:0,mode:'In-person'}],
@@ -909,7 +1093,7 @@ instructors:[
 ]}
 ];
 
-const state={view:'home',query:'',category:'all',format:'all',maxDistance:25,verified:'all',sort:'relevance',activeProvider:null,selectedCourse:0,modalTab:'courses',viewMode:'grid'};
+const state={view:'home',query:'',category:'all',format:'all',maxDistance:25,verified:'all',sort:'relevance',activeProvider:null,selectedCourse:0,modalTab:'courses',viewMode:'grid',compareIds:[]};
 
 function haversine(la1,lo1,la2,lo2){const R=3958.8;const dLa=(la2-la1)*Math.PI/180;const dLo=(lo2-lo1)*Math.PI/180;const a=Math.sin(dLa/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))}
 function distanceFor(p){return haversine(USER_LOCATION.lat,USER_LOCATION.lng,p.lat,p.lng)}
@@ -923,15 +1107,24 @@ function providersIn(catId){return PROVIDERS.filter(p=>p.category===catId)}
 function go(view){state.view=view;document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));const t=document.getElementById('view-'+view);if(t){t.classList.add('on');window.scrollTo({top:0,behavior:'instant'})}document.querySelectorAll('.nav-link[data-nav]').forEach(a=>{a.classList.toggle('on',a.dataset.nav===view)});history.replaceState(null,'','#'+view);if(view==='search')renderResults()}
 function toggleMobileNav(){const nav=document.getElementById('mainNav');const h=getComputedStyle(nav).display==='none'||nav.style.display==='flex';if(h&&nav.style.display!=='flex'){nav.style.cssText='display:flex;position:fixed;top:var(--header-h);left:0;right:0;background:var(--surface);flex-direction:column;align-items:stretch;padding:12px;gap:4px;border-bottom:1px solid var(--border);box-shadow:var(--shadow-lg);z-index:190'}else{nav.style.cssText=''}}
 
-function imgCard(p){
+/* IMG CARD — now with compare checkbox (optional) */
+function imgCard(p,opts){
+  opts=opts||{};
   const cat=categoryOf(p.category);const dist=distanceFor(p);
   const hasDisc=p.discount&&p.discount>0&&p.originalPrice;
-  return `<article class="img-card" onclick="openProvider('${p.id}')">
+  const showCompare=!!opts.showCompare;
+  const isSelected=state.compareIds.includes(p.id);
+  return `<article class="img-card ${isSelected?'selected':''}" onclick="openProvider('${p.id}')">
     <div class="img-card-media">
       <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy" />
       ${p.verified?`<span class="verified-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Verified</span>`:`<span class="pending-chip">Pending</span>`}
       <span class="dist-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>${fmtDist(dist)}</span>
-      ${hasDisc?`<span class="promo-chip">${p.discount}% off</span>`:''}
+      ${showCompare?`
+        <button class="compare-check ${isSelected?'on':''}" onclick="event.stopPropagation();toggleCompare('${p.id}')" aria-label="Add to compare">
+          <span class="cc-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          Compare
+        </button>
+      `:(hasDisc?`<span class="promo-chip">${p.discount}% off</span>`:'')}
     </div>
     <div class="img-card-body">
       <div class="img-card-cat">${cat.name}</div>
@@ -1005,13 +1198,14 @@ function renderHome(){
   document.getElementById('searchCategory').innerHTML='<option value="all">All Categories</option>'+opts;
   renderHeroCards();
   const top=[...PROVIDERS].sort((a,b)=>(b.rating*(b.verified?1.02:1))-(a.rating*(a.verified?1.02:1))).slice(0,5);
-  document.getElementById('topProviders').innerHTML=top.map(imgCard).join('');
+  document.getElementById('topProviders').innerHTML=top.map(p=>imgCard(p)).join('');
   document.getElementById('categoryGrid').innerHTML=CATEGORIES.map(catImgCard).join('');
 }
 
 function runHomeSearch(){const q=document.getElementById('homeQuery').value.trim();const c=document.getElementById('homeCategory').value;const d=parseInt(document.getElementById('homeDistance').value,10);state.query=q;state.category=c;state.maxDistance=d;document.getElementById('searchQuery').value=q;document.getElementById('searchCategory').value=c;document.getElementById('searchDistance').value=String(d);document.getElementById('rangeDistance').value=Math.min(d,50);onRangeChange(Math.min(d,50));renderQuickChips();go('search');renderResults()}
 function applySearch(){state.query=document.getElementById('searchQuery').value.trim();state.category=document.getElementById('searchCategory').value;state.maxDistance=parseInt(document.getElementById('searchDistance').value,10);renderQuickChips();renderResults()}
 
+/* ============ CATEGORY PAGE — WITH COMPARE ============ */
 function openCategory(id){
   const c=categoryOf(id);const list=providersIn(id).sort((a,b)=>{if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return b.reviews-a.reviews});
   document.getElementById('catCrumb').textContent=c.name;
@@ -1022,11 +1216,174 @@ function openCategory(id){
   document.getElementById('catHeroIcon').innerHTML=icon(c.icon,34,1.8);
   const vc=list.filter(p=>p.verified).length;const ar=list.length?(list.reduce((s,p)=>s+p.rating,0)/list.length).toFixed(1):'—';const mp=list.length?Math.min(...list.map(p=>p.price)):0;
   document.getElementById('catHeroStats').innerHTML=`<div class="s"><b>${list.length}</b><span>Providers</span></div><div class="s"><b>${vc}</b><span>Verified</span></div><div class="s"><b>${ar}<span style="font-size:15px">★</span></b><span>Avg. Rating</span></div><div class="s"><b>${fmtPrice(mp)}</b><span>Starting From</span></div>`;
-  document.getElementById('catRankSub').textContent=`Ranked by verification status, learner rating, and review volume in ${c.name}.`;
+  document.getElementById('catRankSub').textContent=`Select 2–4 providers below to compare price, rating, format, courses, and instructors side-by-side.`;
   const promoEl=document.getElementById('catPromo');const discounts=list.filter(p=>p.discount&&p.discount>0);
   if(discounts.length>0){const best=discounts.sort((a,b)=>b.discount-a.discount)[0];promoEl.innerHTML=`<div class="promo-banner"><div class="promo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="promo-text"><b>Seasonal discounts available</b><span>${discounts.length} provider${discounts.length>1?'s':''} in this category currently offer seasonal promotions. Best available: <strong>${best.discount}% off</strong> at ${escapeHtml(best.name)}.</span></div><span class="promo-tag">Save up to ${best.discount}%</span></div>`}else{promoEl.innerHTML=''}
-  document.getElementById('catRankList').innerHTML=list.length?list.map(imgCard).join(''):`<div class="no-results" style="grid-column:1/-1"><h3>No providers yet</h3><p>We're onboarding providers in this category. Check back soon.</p></div>`;
+
+  // Filter out any compare IDs that no longer belong to this category
+  state.compareIds = state.compareIds.filter(cid => list.some(p => p.id === cid));
+
+  document.getElementById('catRankList').innerHTML=list.length?list.map(p=>imgCard(p,{showCompare:true})).join(''):`<div class="no-results" style="grid-column:1/-1"><h3>No providers yet</h3><p>We're onboarding providers in this category. Check back soon.</p></div>`;
+  renderCompareBar();
   go('category');
+}
+
+/* ===== COMPARE BAR ===== */
+function renderCompareBar(){
+  const bar=document.getElementById('catCompareBar');
+  if(!bar)return;
+  if(state.compareIds.length===0){bar.classList.add('hidden');bar.innerHTML='';return}
+  bar.classList.remove('hidden');
+  const picks=state.compareIds.map(id=>PROVIDERS.find(p=>p.id===id)).filter(Boolean);
+  bar.innerHTML=`
+    <div class="cat-compare-info">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10"/><path d="M5 7h14l-2 6a3 3 0 0 1-6 0L9 7"/></svg>
+      <b>${picks.length}</b> selected for comparison
+    </div>
+    <div class="cat-compare-chips">
+      ${picks.map(p=>`
+        <span class="cat-compare-chip">
+          <img src="${p.img}" alt="" />
+          ${escapeHtml(p.name.length>24?p.name.slice(0,24)+'…':p.name)}
+          <button class="rm" onclick="toggleCompare('${p.id}')" aria-label="Remove">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+        </span>
+      `).join('')}
+    </div>
+    <div class="cat-compare-actions">
+      <button class="btn btn-ghost" onclick="clearCompare()">Clear</button>
+      <button class="btn btn-green" onclick="openCompare()" ${picks.length<2?'disabled style="opacity:.5;cursor:not-allowed"':''}>
+        Compare ${picks.length}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  `;
+}
+
+function toggleCompare(id){
+  const idx=state.compareIds.indexOf(id);
+  if(idx>=0){
+    state.compareIds.splice(idx,1);
+  }else{
+    if(state.compareIds.length>=4){showToast('You can compare up to 4 providers at a time.');return}
+    state.compareIds.push(id);
+  }
+  // Re-render category grid + bar
+  if(state.view==='category'){
+    const cat=state.category;
+    const list=providersIn(cat).sort((a,b)=>{if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return b.reviews-a.reviews});
+    document.getElementById('catRankList').innerHTML=list.map(p=>imgCard(p,{showCompare:true})).join('');
+  }
+  renderCompareBar();
+}
+
+function clearCompare(){
+  state.compareIds=[];
+  if(state.view==='category'){
+    const cat=state.category;
+    const list=providersIn(cat).sort((a,b)=>{if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return b.reviews-a.reviews});
+    document.getElementById('catRankList').innerHTML=list.map(p=>imgCard(p,{showCompare:true})).join('');
+  }
+  renderCompareBar();
+  showToast('Comparison cleared.');
+}
+
+/* ===== COMPARE MODAL ===== */
+function openCompare(){
+  if(state.compareIds.length<2){showToast('Select at least 2 providers to compare.');return}
+  const picks=state.compareIds.map(id=>PROVIDERS.find(p=>p.id===id)).filter(Boolean);
+  if(!picks.length)return;
+
+  // Compute best values for highlighting
+  const bestRating=Math.max(...picks.map(p=>p.rating));
+  const bestPrice=Math.min(...picks.map(p=>p.price===0?0:p.price));
+  const mostCourses=Math.max(...picks.map(p=>p.courses.length));
+  const mostInstructors=Math.max(...picks.map(p=>(p.instructors||[]).length));
+  const mostReviews=Math.max(...picks.map(p=>p.reviews));
+  const nearest=Math.min(...picks.map(p=>distanceFor(p)));
+
+  const rows=[
+    {label:'Category',get:p=>categoryOf(p.category).name},
+    {label:'Verified',get:p=>p.verified?'<span style="color:var(--green);font-weight:800;display:inline-flex;align-items:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Yes</span>':'<span style="color:#F59E0B;font-weight:800">Pending</span>'},
+    {label:'Rating',get:p=>`<span class="stars" style="color:var(--gold);letter-spacing:-1px">★★★★★</span> <b style="color:var(--text)">${p.rating.toFixed(1)}</b>`,bestFn:p=>p.rating===bestRating},
+    {label:'Reviews',get:p=>`${p.reviews.toLocaleString('en-US')} reviews`,bestFn:p=>p.reviews===mostReviews},
+    {label:'Price (from)',get:p=>`<b>${fmtPrice(p.price)}</b>${p.originalPrice&&p.originalPrice>p.price?` <span style="text-decoration:line-through;color:var(--muted-2);font-size:12px">${fmtPrice(p.originalPrice)}</span>`:''}`,bestFn:p=>p.price===bestPrice},
+    {label:'Discount',get:p=>p.discount&&p.discount>0?`<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,.14);color:var(--green-2);padding:3px 9px;border-radius:999px;font-size:11px;font-weight:900">${p.discount}% off</span>`:'—'},
+    {label:'Format',get:p=>formatLabel(p.format)},
+    {label:'Distance',get:p=>fmtDist(distanceFor(p)),bestFn:p=>distanceFor(p)===nearest},
+    {label:'Address',get:p=>p.address?escapeHtml(p.address):'—'},
+    {label:'Courses',get:p=>`<b style="color:var(--text)">${p.courses.length}</b> program${p.courses.length===1?'':'s'}`,bestFn:p=>p.courses.length===mostCourses},
+    {label:'Instructors',get:p=>`<b style="color:var(--text)">${(p.instructors||[]).length}</b> instructor${(p.instructors||[]).length===1?'':'s'}`,bestFn:p=>(p.instructors||[]).length===mostInstructors},
+    {label:'Top courses',get:p=>`<div class="mini-course">${p.courses.slice(0,2).map(c=>`<div class="mc"><b>${escapeHtml(c.name)}</b><span>${c.duration} · ${fmtPrice(c.price)}</span></div>`).join('')}${p.courses.length>2?`<div style="font-size:11px;color:var(--muted);text-align:center;padding:4px">+ ${p.courses.length-2} more</div>`:''}</div>`},
+    {label:'Lead instructor',get:p=>{const ins=(p.instructors||[])[0];return ins?`<div class="instructor-mini"><img src="${ins.avatar}" alt=""/><div class="im-info"><b>${escapeHtml(ins.name)}</b><span>${escapeHtml(ins.title)}</span></div></div>`:'—'}},
+    {label:'Certifications',get:p=>{const ins=(p.instructors||[])[0];return ins&&ins.certs&&ins.certs.length?`<div class="tag-list">${ins.certs.map(c=>`<span class="t">${escapeHtml(c)}</span>`).join('')}</div>`:'—'}},
+  ];
+
+  document.getElementById('compareModalContent').innerHTML=`
+    <div class="compare-header">
+      <div>
+        <h2>Compare ${picks.length} providers</h2>
+        <div class="sub">Side-by-side on the metrics that matter most.</div>
+      </div>
+      <div class="actions">
+        <button class="compare-close" onclick="closeCompare()" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="row-label">Attribute</th>
+            ${picks.map(p=>`
+              <th class="compare-provider-head">
+                <img class="cph-img" src="${p.img}" alt="${escapeHtml(p.name)}" />
+                <div class="cph-name">${escapeHtml(p.name)}</div>
+                <div class="cph-cat">${categoryOf(p.category).name}</div>
+                <div class="cph-rating"><span class="stars">★★★★★</span><b>${p.rating.toFixed(1)}</b> · ${p.reviews}</div>
+                ${p.verified?`<div class="cph-verified"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Verified</div>`:''}
+                <div class="cph-remove" onclick="toggleCompare('${p.id}');closeCompare();renderCompareBar();">Remove from comparison</div>
+              </th>
+            `).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(r=>`
+            <tr>
+              <td class="row-label">${r.label}</td>
+              ${picks.map(p=>{
+                const val=r.get(p);
+                const isBest=r.bestFn?r.bestFn(p):false;
+                const cls=isBest?'best':(r.label==='Rating'||r.label==='Price (from)'?'highlight':'');
+                return `<td class="${cls}">${val}</td>`;
+              }).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <div class="compare-summary">
+        <div class="cs-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <div class="cs-text">
+          <b>Highlighted cells show the top performer in each row.</b>
+          <span>Ratings, review counts, distance, number of courses and instructors are all shown. Payment never affects ranking — only verified data is compared here.</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('compareBackdrop').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+
+function closeCompare(){
+  document.getElementById('compareBackdrop').classList.remove('on');
+  document.body.style.overflow='';
 }
 
 function renderFilters(){
@@ -1128,14 +1485,13 @@ function renderResults(){
     </div>`;
     return;
   }
-  g.innerHTML=list.map(imgCard).join('');
+  g.innerHTML=list.map(p=>imgCard(p)).join('');
 }
 
 function quickSearch(q){state.query=q;state.category='all';state.maxDistance=50;state.verified='all';state.format='all';document.getElementById('searchQuery').value=q;document.getElementById('searchCategory').value='all';document.getElementById('searchDistance').value='50';document.getElementById('rangeDistance').value=50;onRangeChange(50);renderFilters();renderQuickChips();renderResults()}
 
 function toggleFilters(open){const panel=document.getElementById('filtersPanel');const bd=document.getElementById('filtersBackdrop');if(window.innerWidth<=900){panel.classList.toggle('open',open);bd.classList.toggle('on',open)}}
 
-/* ============ PROVIDER MODAL (ENHANCED with tabs) ============ */
 function openProvider(id){
   const p=PROVIDERS.find(x=>x.id===id);if(!p)return;
   state.activeProvider=p;state.selectedCourse=0;state.modalTab='courses';
@@ -1276,7 +1632,7 @@ function init(){
   document.getElementById('homeQuery').addEventListener('keydown',e=>{if(e.key==='Enter')runHomeSearch()});
   document.getElementById('searchQuery').addEventListener('keydown',e=>{if(e.key==='Enter')applySearch()});
   document.getElementById('searchQuery').addEventListener('input',e=>{state.query=e.target.value;renderResults()});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();toggleFilters(false)}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeCompare();toggleFilters(false)}});
   const hash=(location.hash||'#home').replace('#','');if(['home','search','trust'].includes(hash))go(hash);
   setTimeout(()=>{const g=document.getElementById('geoText');if(g){g.innerHTML='Showing distances from <b>'+USER_LOCATION.name+'</b> · <span style="color:#22C55E;font-weight:700">location detected</span>'}},900);
 }
