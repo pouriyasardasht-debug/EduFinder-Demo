@@ -145,6 +145,8 @@ a{color:inherit;text-decoration:none}
 .img-card{background:var(--surface);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s;cursor:pointer;display:flex;flex-direction:column;position:relative;text-align:left}
 .img-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--border-2)}
 .img-card.selected{border-color:var(--green);box-shadow:0 0 0 2px var(--green),var(--shadow-lg)}
+.img-card.pilot{border-color:rgba(255,201,60,.25)}
+.img-card.pilot:hover{border-color:rgba(255,201,60,.5);box-shadow:0 0 0 1px rgba(255,201,60,.3),var(--shadow-lg)}
 .img-card-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2)}
 .img-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .img-card:hover .img-card-media img{transform:scale(1.06)}
@@ -154,21 +156,13 @@ a{color:inherit;text-decoration:none}
 .img-card .pending-chip{position:absolute;top:10px;left:10px;z-index:2;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;background:rgba(255,255,255,.96);border-radius:999px;font-size:11px;font-weight:800;color:#D97706}
 .img-card .dist-chip{position:absolute;bottom:10px;left:10px;z-index:2;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border-radius:999px;font-size:11px;font-weight:700;color:#fff}
 .img-card .promo-chip{position:absolute;top:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px;background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff;border-radius:999px;font-size:10.5px;font-weight:900;letter-spacing:.3px;box-shadow:0 4px 12px rgba(34,197,94,.5)}
+.img-card .pilot-chip{position:absolute;top:10px;right:10px;z-index:3;display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px;background:linear-gradient(135deg,#FFC93C,#F5B800);color:#0B1B3F;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;box-shadow:0 4px 12px rgba(245,184,0,.5)}
+.img-card .job-chip{position:absolute;bottom:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;background:rgba(34,197,94,.9);backdrop-filter:blur(8px);border-radius:999px;font-size:11px;font-weight:800;color:#fff;box-shadow:0 4px 12px rgba(34,197,94,.4)}
 
-/* COMPARE CHECK BUTTON — top-right of card */
-.compare-check{
-  position:absolute;top:10px;right:10px;z-index:3;
-  display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;
-  background:rgba(0,0,0,.65);backdrop-filter:blur(10px);
-  border-radius:999px;font-size:11px;font-weight:800;color:#fff;
-  border:1.5px solid rgba(255,255,255,.25);
-  transition:all .2s;cursor:pointer;
-}
+/* COMPARE CHECK BUTTON */
+.compare-check{position:absolute;top:10px;right:10px;z-index:4;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border-radius:999px;font-size:11px;font-weight:800;color:#fff;border:1.5px solid rgba(255,255,255,.25);transition:all .2s;cursor:pointer}
 .compare-check:hover{background:rgba(0,0,0,.8);transform:scale(1.03)}
-.compare-check .cc-box{
-  width:15px;height:15px;border-radius:4px;border:2px solid rgba(255,255,255,.7);
-  display:grid;place-items:center;transition:all .2s;flex:none;
-}
+.compare-check .cc-box{width:15px;height:15px;border-radius:4px;border:2px solid rgba(255,255,255,.7);display:grid;place-items:center;transition:all .2s;flex:none}
 .compare-check .cc-box svg{opacity:0;transform:scale(.5);transition:all .2s;color:#fff}
 .compare-check.on{background:linear-gradient(135deg,var(--green),var(--green-2));border-color:transparent;box-shadow:0 6px 16px -6px rgba(34,197,94,.7)}
 .compare-check.on .cc-box{background:#fff;border-color:#fff;color:var(--green)}
@@ -176,7 +170,7 @@ a{color:inherit;text-decoration:none}
 .compare-check.on:hover{filter:brightness(1.08)}
 
 .img-card-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
-.img-card-cat{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--green);margin-bottom:5px}
+.img-card-cat{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--green);margin-bottom:5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 [data-theme="dark"] .img-card-cat{color:#4ADE80}
 .img-card-title{font-size:15.5px;font-weight:800;letter-spacing:-.4px;color:var(--text);line-height:1.3;margin-bottom:8px}
 .img-card-stars{display:flex;align-items:center;gap:5px;font-size:12.5px}
@@ -190,22 +184,32 @@ a{color:inherit;text-decoration:none}
 .img-card-cta{font-size:11.5px;font-weight:800;color:#0B1B3F;background:var(--gold);padding:8px 13px;border-radius:9px;transition:all .2s;white-space:nowrap}
 .img-card:hover .img-card-cta{background:var(--gold-2);box-shadow:0 6px 16px -6px rgba(245,184,0,.7)}
 
+/* PILOT BADGE */
+.pilot-badge{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 8px;border-radius:999px;background:linear-gradient(135deg,#FFC93C,#F5B800);color:#0B1B3F;font-size:9.5px;font-weight:900;letter-spacing:.5px;text-transform:uppercase}
+
 .providers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
 
+/* CATEGORY CARD */
 .cat-img-card{position:relative;overflow:hidden;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border);cursor:pointer;text-align:left;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s;display:flex;flex-direction:column}
 .cat-img-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--border-2)}
+.cat-img-card.pilot{border-color:rgba(255,201,60,.4);box-shadow:0 0 0 1px rgba(255,201,60,.15),var(--shadow-lg)}
+.cat-img-card.pilot:hover{border-color:rgba(255,201,60,.7);box-shadow:0 0 0 2px rgba(255,201,60,.3),var(--shadow-xl)}
+.cat-img-card.pilot::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,201,60,.08),transparent 50%);pointer-events:none;z-index:1}
 .cat-img-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2)}
 .cat-img-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .cat-img-card:hover .cat-img-media img{transform:scale(1.06)}
 .cat-img-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,transparent 35%,transparent 55%,rgba(0,0,0,.55) 100%)}
 .cat-img-icon{position:absolute;top:12px;left:12px;z-index:2;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,var(--c1),var(--c2));box-shadow:0 8px 18px -8px var(--c1);backdrop-filter:blur(4px)}
 .cat-img-count{position:absolute;bottom:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border-radius:999px;font-size:11px;font-weight:700;color:#fff}
-.cat-img-body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1}
-.cat-img-title{font-size:15.5px;font-weight:800;letter-spacing:-.4px;color:var(--text);line-height:1.25;margin-bottom:4px}
+.cat-img-body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;position:relative;z-index:2}
+.cat-img-title{font-size:15.5px;font-weight:800;letter-spacing:-.4px;color:var(--text);line-height:1.25;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .cat-img-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px}
 .cat-img-explore{margin-top:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;color:var(--muted-2);letter-spacing:.3px;transition:color .2s,gap .2s}
 .cat-img-card:hover .cat-img-explore{color:var(--text);gap:9px}
+
+/* PILOT RIBBON */
+.pilot-ribbon{position:absolute;top:16px;right:-36px;z-index:3;background:linear-gradient(135deg,#FFC93C,#F5B800);color:#0B1B3F;font-size:10px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:6px 44px;transform:rotate(45deg);box-shadow:0 4px 12px rgba(245,184,0,.5);pointer-events:none}
 
 .cat-hero{background:var(--hero-grad);color:#fff;position:relative;overflow:hidden;padding:56px 24px 80px}
 .cat-hero::before{content:'';position:absolute;inset:0;opacity:.5;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse at 40% 40%,black,transparent 72%)}
@@ -218,13 +222,56 @@ a{color:inherit;text-decoration:none}
 .breadcrumb .sep{opacity:.5}
 .cat-hero-content{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
 .cat-hero-icon{width:78px;height:78px;border-radius:22px;flex:none;background:linear-gradient(140deg,var(--c1),var(--c2));display:grid;place-items:center;color:#fff;box-shadow:0 20px 40px -15px var(--c1)}
-.cat-hero h1{font-family:var(--font-display);font-size:clamp(30px,4vw,48px);font-weight:800;letter-spacing:-1.8px;line-height:1.05;margin-bottom:8px}
+.cat-hero h1{font-family:var(--font-display);font-size:clamp(30px,4vw,48px);font-weight:800;letter-spacing:-1.8px;line-height:1.05;margin-bottom:8px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .cat-hero p{color:#A9B8D4;font-size:15px;max-width:620px;line-height:1.6}
 [data-theme="dark"] .cat-hero p{color:#8A96B0}
 .cat-hero-stats{display:flex;gap:32px;margin-top:28px;flex-wrap:wrap}
 .cat-hero-stats .s b{display:block;font-size:24px;font-weight:800;letter-spacing:-.9px;font-family:var(--font-display);color:#fff}
 .cat-hero-stats .s span{font-size:11px;color:#8A96B0;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
 
+/* PILOT SUB-CATEGORY CHIPS */
+.subcat-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.subcat-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  height:36px;padding:0 16px;border-radius:999px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:12.5px;font-weight:700;
+  transition:all .2s;cursor:pointer;
+}
+.subcat-pill:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}
+.subcat-pill.on{background:linear-gradient(135deg,#FFC93C,#F5B800);color:#0B1B3F;border-color:transparent}
+
+/* IT PILOT BANNER */
+.pilot-banner{
+  background:linear-gradient(135deg,rgba(255,201,60,.15),rgba(255,201,60,.05));
+  border:1px solid rgba(255,201,60,.4);border-radius:var(--r-lg);
+  padding:18px 22px;margin-bottom:24px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  position:relative;overflow:hidden;
+}
+.pilot-banner::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#FFC93C,#F5B800,#FFC93C);
+  background-size:200% 100%;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0% 0}100%{background-position:200% 0}}
+.pilot-banner-icon{
+  width:44px;height:44px;border-radius:13px;flex:none;
+  background:linear-gradient(135deg,#FFC93C,#F5B800);
+  display:grid;place-items:center;color:#0B1B3F;
+  box-shadow:0 8px 20px -8px rgba(245,184,0,.7);
+}
+.pilot-banner-text{flex:1;min-width:200px}
+.pilot-banner-text b{display:block;font-size:14.5px;font-weight:900;color:var(--text);letter-spacing:-.3px;margin-bottom:3px}
+.pilot-banner-text span{font-size:12.5px;color:var(--text-2);line-height:1.5}
+.pilot-banner-stats{display:flex;gap:14px;flex-wrap:wrap}
+.pilot-banner-stats .ps{display:flex;flex-direction:column;align-items:flex-end}
+.pilot-banner-stats .ps b{font-size:18px;font-weight:900;color:var(--gold-2);letter-spacing:-.5px;font-family:var(--font-display)}
+[data-theme="dark"] .pilot-banner-stats .ps b{color:var(--gold)}
+.pilot-banner-stats .ps span{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+
+/* PROMO BANNER */
 .promo-banner{background:linear-gradient(135deg,rgba(34,197,94,.14),rgba(34,197,94,.04));border:1px solid rgba(34,197,94,.35);border-radius:var(--r-lg);padding:20px 24px;display:flex;align-items:center;gap:18px;margin-bottom:32px;flex-wrap:wrap}
 .promo-icon{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--green),var(--green-2));display:grid;place-items:center;color:#fff;flex:none;box-shadow:0 10px 22px -10px rgba(34,197,94,.7)}
 .promo-text{flex:1;min-width:200px}
@@ -232,174 +279,97 @@ a{color:inherit;text-decoration:none}
 .promo-text span{font-size:13px;color:var(--muted);font-weight:500;line-height:1.5}
 .promo-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:linear-gradient(135deg,var(--green),var(--green-2));color:#fff}
 
-/* ===== CATEGORY COMPARE BAR ===== */
-.cat-compare-bar{
+/* ===== FLOATING COMPARE DOCK ===== */
+.compare-dock{
+  position:fixed;bottom:24px;left:50%;transform:translate(-50%,150%);
+  z-index:255;background:var(--surface);border:1px solid var(--border);
+  border-radius:18px;padding:12px 16px;
+  box-shadow:var(--shadow-xl);
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
-  padding:14px 18px;margin-bottom:26px;
-  transition:all .3s var(--ease);
+  max-width:calc(100% - 32px);
+  transition:transform .4s var(--ease),opacity .3s;
+  opacity:0;
 }
-.cat-compare-bar.hidden{display:none}
-.cat-compare-info{
-  display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text);flex-wrap:wrap;
+.compare-dock.on{transform:translate(-50%,0);opacity:1}
+.compare-dock-info{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;
 }
-.cat-compare-info b{color:var(--green);font-weight:900}
-.cat-compare-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
-.cat-compare-chip{
-  display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 8px 0 12px;
+.compare-dock-info .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#fff;font-size:12px;font-weight:900;
+}
+.compare-dock-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+.compare-dock-chip{
+  display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 6px 0 10px;
   background:var(--surface-2);border:1px solid var(--border);border-radius:999px;
-  font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;
-  transition:all .2s;
+  font-size:11.5px;font-weight:700;color:var(--text);white-space:nowrap;
 }
-.cat-compare-chip img{width:20px;height:20px;border-radius:50%;object-fit:cover;flex:none}
-.cat-compare-chip .rm{
-  width:20px;height:20px;border-radius:50%;background:var(--surface);
-  display:grid;place-items:center;color:var(--muted);cursor:pointer;transition:all .2s;
-}
-.cat-compare-chip .rm:hover{background:#EF4444;color:#fff}
-.cat-compare-actions{display:flex;gap:8px;margin-left:auto}
-.cat-compare-actions .btn{height:38px;padding:0 16px;font-size:13px}
+.compare-dock-chip img{width:18px;height:18px;border-radius:50%;object-fit:cover;flex:none}
+.compare-dock-chip .rm{width:18px;height:18px;border-radius:50%;background:var(--surface);display:grid;place-items:center;color:var(--muted);cursor:pointer;transition:all .2s}
+.compare-dock-chip .rm:hover{background:#EF4444;color:#fff}
+.compare-dock-actions{display:flex;gap:8px}
+.compare-dock-actions .btn{height:38px;padding:0 16px;font-size:12.5px}
 @media(max-width:640px){
-  .cat-compare-actions{width:100%;margin-left:0}
-  .cat-compare-actions .btn{flex:1;justify-content:center}
+  .compare-dock{left:12px;right:12px;transform:translate(0,150%);max-width:none;padding:12px}
+  .compare-dock.on{transform:translate(0,0)}
+  .compare-dock-chips{order:3;width:100%;margin-top:8px}
+  .compare-dock-actions{width:100%;justify-content:space-between}
+  .compare-dock-actions .btn{flex:1;justify-content:center}
 }
 
 /* ===== COMPARISON MODAL ===== */
-.compare-backdrop{
-  position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);
-  z-index:350;opacity:0;pointer-events:none;transition:opacity .3s;
-  display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;
-}
+.compare-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);z-index:350;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
 .compare-backdrop.on{opacity:1;pointer-events:auto}
-.compare-modal{
-  background:var(--surface);border-radius:var(--r-xl);width:100%;max-width:1200px;
-  max-height:94vh;overflow-y:auto;position:relative;
-  transform:translateY(24px) scale(.97);transition:transform .4s var(--ease);
-  box-shadow:var(--shadow-xl);border:1px solid var(--border);
-}
+.compare-modal{background:var(--surface);border-radius:var(--r-xl);width:100%;max-width:1200px;max-height:94vh;overflow-y:auto;position:relative;transform:translateY(24px) scale(.97);transition:transform .4s var(--ease);box-shadow:var(--shadow-xl);border:1px solid var(--border)}
 .compare-backdrop.on .compare-modal{transform:none}
-.compare-header{
-  position:sticky;top:0;z-index:10;background:var(--surface);
-  padding:22px 28px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  border-radius:var(--r-xl) var(--r-xl) 0 0;
-}
-.compare-header h2{
-  font-family:var(--font-display);font-size:20px;font-weight:800;
-  letter-spacing:-.7px;color:var(--text);
-}
+.compare-header{position:sticky;top:0;z-index:10;background:var(--surface);padding:22px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-radius:var(--r-xl) var(--r-xl) 0 0}
+.compare-header h2{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:-.7px;color:var(--text)}
 .compare-header .sub{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px}
 .compare-header .actions{display:flex;gap:10px;align-items:center}
-.compare-close{
-  width:38px;height:38px;border-radius:11px;background:var(--surface-2);
-  display:grid;place-items:center;color:var(--text);transition:all .2s;
-}
+.compare-close{width:38px;height:38px;border-radius:11px;background:var(--surface-2);display:grid;place-items:center;color:var(--text);transition:all .2s}
 .compare-close:hover{background:#EF4444;color:#fff;transform:rotate(90deg)}
-
-/* Comparison table */
 .compare-scroll{padding:22px 28px 32px;overflow-x:auto}
-.compare-table{
-  width:100%;border-collapse:separate;border-spacing:0;min-width:600px;
-}
-.compare-table th, .compare-table td{
-  padding:14px 16px;text-align:left;vertical-align:top;
-  border-bottom:1px solid var(--border-2);font-size:13.5px;
-}
-.compare-table thead th{
-  position:sticky;top:0;background:var(--surface-2);z-index:2;
-  border-bottom:2px solid var(--border);
-}
-.compare-table thead th:first-child{
-  background:var(--surface-2);border-radius:14px 0 0 0;
-}
+.compare-table{width:100%;border-collapse:separate;border-spacing:0;min-width:600px}
+.compare-table th, .compare-table td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border-2);font-size:13.5px}
+.compare-table thead th{position:sticky;top:0;background:var(--surface-2);z-index:2;border-bottom:2px solid var(--border)}
+.compare-table thead th:first-child{background:var(--surface-2);border-radius:14px 0 0 0}
 .compare-table thead th:last-child{border-radius:0 14px 0 0}
 .compare-table tbody tr:last-child td{border-bottom:0}
-.compare-table .row-label{
-  font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;
-  color:var(--muted-2);width:150px;background:var(--surface-2);
-  border-right:1px solid var(--border);white-space:nowrap;
-}
+.compare-table .row-label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:var(--muted-2);width:150px;background:var(--surface-2);border-right:1px solid var(--border);white-space:nowrap}
 .compare-table tbody td{color:var(--text-2);font-weight:600}
 .compare-table tbody td.highlight{color:var(--text);font-weight:800}
 .compare-table tbody td.best{color:var(--green);font-weight:800}
 [data-theme="dark"] .compare-table tbody td.best{color:#4ADE80}
-.compare-table tbody td.best::before{
-  content:'★ ';font-size:11px;vertical-align:2px;
-}
-
-/* Provider header cell */
-.compare-provider-head{text-align:center;min-width:180px;padding:16px 12px !important}
-.compare-provider-head .cph-img{
-  width:100%;height:96px;border-radius:12px;object-fit:cover;
-  margin-bottom:10px;background:var(--surface-3);
-}
-.compare-provider-head .cph-name{
-  font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.3px;
-  line-height:1.25;margin-bottom:4px;
-}
-.compare-provider-head .cph-cat{
-  font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
-  color:var(--green);margin-bottom:8px;
-}
+.compare-table tbody td.best::before{content:'★ ';font-size:11px;vertical-align:2px}
+.compare-provider-head{text-align:center;min-width:180px;padding:16px 12px !important;position:relative}
+.compare-provider-head .cph-img{width:100%;height:96px;border-radius:12px;object-fit:cover;margin-bottom:10px;background:var(--surface-3)}
+.compare-provider-head .cph-name{font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.3px;line-height:1.25;margin-bottom:4px}
+.compare-provider-head .cph-cat{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--green);margin-bottom:8px}
 [data-theme="dark"] .compare-provider-head .cph-cat{color:#4ADE80}
-.compare-provider-head .cph-rating{
-  display:inline-flex;align-items:center;gap:5px;font-size:12px;
-  color:var(--text-2);font-weight:700;
-}
+.compare-provider-head .cph-rating{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text-2);font-weight:700}
 .compare-provider-head .cph-rating .stars{color:var(--gold);letter-spacing:-1px}
-.compare-provider-head .cph-verified{
-  display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;
-  background:rgba(34,197,94,.14);color:var(--green-2);border-radius:999px;
-  font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;
-  margin-top:6px;
-}
+.compare-provider-head .cph-verified{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;background:rgba(34,197,94,.14);color:var(--green-2);border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;margin-top:6px}
 [data-theme="dark"] .compare-provider-head .cph-verified{color:#4ADE80}
-.compare-provider-head .cph-remove{
-  display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
-  color:var(--muted);margin-top:10px;padding:4px 8px;border-radius:6px;
-  transition:all .2s;cursor:pointer;
-}
+.compare-provider-head .cph-remove{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--muted);margin-top:10px;padding:4px 8px;border-radius:6px;transition:all .2s;cursor:pointer}
 .compare-provider-head .cph-remove:hover{background:rgba(239,68,68,.1);color:#EF4444}
 
-/* Tag list inside table */
 .tag-list{display:flex;flex-wrap:wrap;gap:5px}
-.tag-list .t{
-  font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;
-  background:var(--surface-2);color:var(--text-2);white-space:nowrap;
-}
-
-/* Course mini-row */
-.mini-course{
-  display:flex;flex-direction:column;gap:6px;
-}
-.mini-course .mc{
-  padding:8px 10px;background:var(--surface-2);border-radius:8px;
-  font-size:12px;line-height:1.4;
-}
+.tag-list .t{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--text-2);white-space:nowrap}
+.mini-course{display:flex;flex-direction:column;gap:6px}
+.mini-course .mc{padding:8px 10px;background:var(--surface-2);border-radius:8px;font-size:12px;line-height:1.4}
 .mini-course .mc b{display:block;color:var(--text);font-weight:800;margin-bottom:2px}
 .mini-course .mc span{color:var(--muted);font-weight:600;font-size:11px}
-
-/* Instructor mini */
-.instructor-mini{
-  display:flex;align-items:center;gap:10px;padding:6px 0;
-}
+.instructor-mini{display:flex;align-items:center;gap:10px;padding:6px 0}
 .instructor-mini img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex:none;border:2px solid var(--surface-2)}
 .instructor-mini .im-info{min-width:0}
 .instructor-mini .im-info b{display:block;font-size:12.5px;font-weight:800;color:var(--text);line-height:1.2}
 .instructor-mini .im-info span{font-size:10.5px;color:var(--muted);font-weight:600}
 
-/* Best value banner at bottom of comparison */
-.compare-summary{
-  margin-top:22px;padding:20px 22px;border-radius:var(--r-lg);
-  background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.03));
-  border:1px solid rgba(34,197,94,.3);
-  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-}
-.compare-summary .cs-icon{
-  width:44px;height:44px;border-radius:13px;flex:none;
-  background:linear-gradient(135deg,var(--green),var(--green-2));color:#fff;
-  display:grid;place-items:center;
-}
+.compare-summary{margin-top:22px;padding:20px 22px;border-radius:var(--r-lg);background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(34,197,94,.03));border:1px solid rgba(34,197,94,.3);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.compare-summary .cs-icon{width:44px;height:44px;border-radius:13px;flex:none;background:linear-gradient(135deg,var(--green),var(--green-2));color:#fff;display:grid;place-items:center}
 .compare-summary .cs-text{flex:1;min-width:200px}
 .compare-summary .cs-text b{display:block;font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
 .compare-summary .cs-text span{font-size:12.5px;color:var(--text-2);line-height:1.5}
@@ -435,7 +405,11 @@ a{color:inherit;text-decoration:none}
 .quick-chip span{font-size:10.5px;color:rgba(255,255,255,.72);font-weight:600;margin-top:3px}
 .quick-chip.on{border-color:var(--green);box-shadow:0 0 0 2px var(--green), 0 14px 28px -12px rgba(34,197,94,.5)}
 .quick-chip.on::after{background:linear-gradient(135deg,rgba(34,197,94,.75),rgba(22,163,74,.45))}
+.quick-chip.pilot{border-color:rgba(255,201,60,.5)}
+.quick-chip.pilot.on{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 14px 28px -12px rgba(245,184,0,.6)}
+.quick-chip.pilot.on::after{background:linear-gradient(135deg,rgba(255,201,60,.85),rgba(245,184,0,.55))}
 .quick-chip .qc-icon{position:absolute;top:10px;right:10px;z-index:2;width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);display:grid;place-items:center;color:#fff}
+.quick-chip .qc-pilot{position:absolute;top:10px;left:10px;z-index:2;font-size:9px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:linear-gradient(135deg,#FFC93C,#F5B800);color:#0B1B3F}
 
 .results-layout{max-width:1320px;margin:0 auto;padding:32px 24px 90px;display:grid;grid-template-columns:270px 1fr;gap:32px;align-items:start}
 .filters{position:sticky;top:calc(var(--header-h) + 20px);background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);padding:22px;box-shadow:var(--shadow-sm)}
@@ -478,7 +452,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .featured-media::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg, rgba(0,0,0,.45), transparent 65%)}
 .featured-badge{position:absolute;top:14px;left:14px;z-index:2;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;background:linear-gradient(135deg,var(--green),var(--green-2));color:#fff;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;box-shadow:0 6px 16px -6px rgba(34,197,94,.8)}
 .featured-body{padding:26px 30px;display:flex;flex-direction:column}
-.featured-body .fb-cat{font-size:11.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+.featured-body .fb-cat{font-size:11.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--green);margin-bottom:6px;display:flex;align-items:center;gap:8px}
 [data-theme="dark"] .featured-body .fb-cat{color:#4ADE80}
 .featured-body h3{font-family:var(--font-display);font-size:clamp(20px,2.4vw,26px);font-weight:800;letter-spacing:-.9px;color:var(--text);line-height:1.15;margin-bottom:10px}
 .featured-body .fb-desc{font-size:13.5px;color:var(--text-2);line-height:1.65;margin-bottom:18px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -498,12 +472,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .list-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 .list-section-label .count{background:var(--surface-2);color:var(--text);padding:3px 10px;border-radius:999px;font-size:11px}
 
-.providers-list{display:flex;flex-direction:column;gap:14px}
-.providers-list .img-card{display:grid;grid-template-columns:220px 1fr;align-items:stretch}
-.providers-list .img-card-media{aspect-ratio:auto;height:100%;min-height:150px}
-.providers-list .img-card-body{padding:18px 22px}
-.providers-list .img-card-title{font-size:17px}
-
 .no-results{grid-column:1/-1;text-align:center;padding:70px 30px;background:var(--surface);border-radius:var(--r-xl);border:1px dashed var(--border)}
 .no-results .ico{width:72px;height:72px;border-radius:20px;background:var(--surface-2);display:grid;place-items:center;margin:0 auto 20px;color:var(--muted)}
 .no-results h3{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:-.5px}
@@ -522,8 +490,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
   .filters-close{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border-2)}
   .filters-close h3{font-size:16px;font-weight:800;color:var(--text)}
   .filters-close button{width:34px;height:34px;border-radius:9px;background:var(--surface-2);display:grid;place-items:center;color:var(--text)}
-  .providers-list .img-card{grid-template-columns:1fr}
-  .providers-list .img-card-media{aspect-ratio:16/10;min-height:0}
 }
 
 .trust-hero{background:var(--hero-grad);color:#fff;padding:64px 24px 76px;position:relative;overflow:hidden}
@@ -594,12 +560,53 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .modal-hero img{width:100%;height:100%;object-fit:cover}
 .modal-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 30%,rgba(0,0,0,.6) 100%)}
 .modal-hero-content{position:absolute;bottom:20px;left:28px;right:28px;z-index:2;color:#fff}
-.modal-hero-content .mh-cat{font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:6px}
+.modal-hero-content .mh-cat{font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:6px;display:flex;align-items:center;gap:8px}
 .modal-hero-content h2{font-family:var(--font-display);font-size:clamp(22px,2.6vw,30px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,.4)}
 .modal-hero-content .mh-meta{display:flex;gap:16px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.9);flex-wrap:wrap}
 .modal-hero-content .mh-meta span{display:inline-flex;align-items:center;gap:5px}
 .modal-hero-content .stars{color:#FFC93C;letter-spacing:-1px}
 .modal-hero .verified-chip{position:absolute;top:16px;left:16px;z-index:3;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-radius:999px;font-size:11.5px;font-weight:800;color:#059669;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.modal-hero .pilot-chip-large{position:absolute;top:16px;right:16px;z-index:3;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;background:linear-gradient(135deg,#FFC93C,#F5B800);color:#0B1B3F;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 6px 16px -6px rgba(245,184,0,.6)}
+
+/* IT PROVIDER ENRICHMENT */
+.it-enrichment{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  padding:16px 28px 0;
+}
+.it-enrichment .enr{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;text-align:center;
+}
+.it-enrichment .enr b{
+  display:block;font-family:var(--font-display);font-size:18px;font-weight:900;
+  color:var(--green);letter-spacing:-.6px;line-height:1.1;
+}
+[data-theme="dark"] .it-enrichment .enr b{color:#4ADE80}
+.it-enrichment .enr span{
+  display:block;font-size:10.5px;color:var(--muted);font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;margin-top:4px;
+}
+@media(max-width:600px){.it-enrichment{grid-template-columns:1fr 1fr;padding:16px 20px 0}}
+
+.skills-row{
+  display:flex;gap:6px;flex-wrap:wrap;
+  padding:16px 28px 0;
+}
+.skills-row .skill{
+  font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:8px;
+  background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);
+}
+.hiring-row{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:14px 28px 0;
+  font-size:11.5px;color:var(--muted);font-weight:600;
+}
+.hiring-row b{color:var(--text);font-weight:800}
+.hiring-row .hp{
+  font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;
+  background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);
+}
+@media(max-width:600px){.skills-row,.hiring-row{padding:14px 20px 0}}
 
 .modal-body{padding:0}
 .modal-intro{padding:22px 28px 6px}
@@ -676,6 +683,8 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,120%);background:var(--text);color:var(--bg);padding:14px 22px;border-radius:14px;font-size:13.5px;font-weight:700;box-shadow:var(--shadow-xl);z-index:400;display:flex;align-items:center;gap:10px;transition:transform .4s var(--ease);max-width:90vw}
 .toast.on{transform:translate(-50%,0)}
 .toast svg{color:var(--green);flex:none}
+/* push toasts above compare dock */
+.compare-dock.on ~ .toast{bottom:100px}
 </style>
 </head>
 <body>
@@ -757,16 +766,17 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     <div class="cat-hero-inner">
       <div class="breadcrumb"><a onclick="go('home')">Home</a><span class="sep">/</span><a onclick="go('home');setTimeout(()=>document.getElementById('categories').scrollIntoView({behavior:'smooth'}),120)">Categories</a><span class="sep">/</span><span id="catCrumb">—</span></div>
       <div class="cat-hero-content"><div class="cat-hero-icon" id="catHeroIcon"></div><div style="flex:1;min-width:280px"><h1 id="catHeroTitle">—</h1><p id="catHeroDesc">—</p></div></div>
+      <div class="subcat-row" id="subcatRow"></div>
       <div class="cat-hero-stats" id="catHeroStats"></div>
     </div>
   </div>
   <div class="section" style="padding-top:52px">
+    <div id="catPilotBanner"></div>
     <div id="catPromo"></div>
     <div class="section-head">
-      <div><h2>Most trusted providers</h2><p id="catRankSub">Select 2–4 providers below to compare them side-by-side.</p></div>
+      <div><h2 id="catListTitle">Most trusted providers</h2><p id="catRankSub">Select 2–4 providers below to compare them side-by-side.</p></div>
       <button class="link-arrow" onclick="go('search')">All providers <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
-    <div class="cat-compare-bar hidden" id="catCompareBar"></div>
     <div class="providers-grid" id="catRankList"></div>
   </div>
 </section>
@@ -855,6 +865,20 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 
 <div class="modal-backdrop" id="modalBackdrop" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalContent"></div></div>
 <div class="compare-backdrop" id="compareBackdrop" onclick="if(event.target===this)closeCompare()"><div class="compare-modal" id="compareModalContent"></div></div>
+
+<!-- FLOATING COMPARE DOCK (always available) -->
+<div class="compare-dock" id="compareDock">
+  <div class="compare-dock-info">
+    <span class="num" id="compareDockCount">0</span>
+    <span>selected to compare</span>
+  </div>
+  <div class="compare-dock-chips" id="compareDockChips"></div>
+  <div class="compare-dock-actions">
+    <button class="btn btn-ghost" onclick="clearCompare()">Clear</button>
+    <button class="btn btn-green" onclick="openCompare()">Compare <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+</div>
+
 <div class="toast" id="toast"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="toastMsg"></span></div>
 
 <script>
@@ -919,7 +943,7 @@ function av(i){return AVATARS[i%AVATARS.length]}
 const USER_LOCATION={lat:27.9506,lng:-82.4572,name:'Tampa, FL'};
 
 const CATEGORIES=[
-{id:'it',name:'IT & Technology',icon:'code',c1:'#3B82F6',c2:'#1E40AF',cover:IMG.computer_lab,desc:'Software development, cybersecurity, cloud, and modern engineering skills.'},
+{id:'it',name:'IT & Technology',icon:'code',c1:'#3B82F6',c2:'#1E40AF',cover:IMG.computer_lab,desc:'Software development, cybersecurity, cloud, and modern engineering skills.',pilot:true,subcats:['Programming','Cybersecurity','Cloud & DevOps','Data Science']},
 {id:'cyber',name:'Cybersecurity',icon:'shield',c1:'#EF4444',c2:'#991B1B',cover:IMG.cyber_lock,desc:'Security operations, ethical hacking, and certification prep.'},
 {id:'cloud',name:'Cloud & DevOps',icon:'cloud',c1:'#0EA5E9',c2:'#0369A1',cover:IMG.cloud_servers,desc:'AWS, Azure, Kubernetes, and modern infrastructure engineering.'},
 {id:'data',name:'Data Science & AI',icon:'chip',c1:'#8B5CF6',c2:'#6D28D9',cover:IMG.data_ai,desc:'Machine learning, analytics, and applied artificial intelligence.'},
@@ -942,23 +966,23 @@ const CATEGORIES=[
 const FORMATS=[{id:'all',label:'All formats'},{id:'inperson',label:'In-person'},{id:'online',label:'Online'},{id:'hybrid',label:'Hybrid'}];
 
 const PROVIDERS=[
-{id:'cc',name:'Computer Coach Training Center',category:'it',icon:'code',c1:'#3B82F6',c2:'#1E40AF',img:IMG.computer_lab,rating:4.8,reviews:312,price:13500,originalPrice:15000,discount:10,discountLabel:'Fall 2026: 10% off',lat:27.9506,lng:-82.4572,verified:true,format:'hybrid',address:'5005 N Hesperides St, Tampa',desc:'One of Tampa\u2019s most established IT training providers — WIOA-approved programs in full-stack development, cybersecurity, cloud, and digital marketing.',courses:[{name:'Full Stack Web App Development',duration:'20 weeks',price:13500,mode:'Hybrid'},{name:'Cyber Security Specialist',duration:'16 weeks',price:10500,mode:'Hybrid'},{name:'Cloud Integration Specialist',duration:'12 weeks',price:8500,mode:'Online'},{name:'Digital Marketing Specialist',duration:'16 weeks',price:8900,mode:'Online'}],
+{id:'cc',name:'Computer Coach Training Center',category:'it',icon:'code',c1:'#3B82F6',c2:'#1E40AF',img:IMG.computer_lab,rating:4.8,reviews:312,price:13500,originalPrice:15000,discount:10,discountLabel:'Fall 2026: 10% off',lat:27.9506,lng:-82.4572,verified:true,format:'hybrid',address:'5005 N Hesperides St, Tampa',pilot:true,placementRate:91,avgSalary:78000,hiringPartners:['Accenture','Citi','WellCare','Tech Data'],skills:['Full-Stack','Python','Cyber Security','Cloud','Digital Marketing'],desc:'One of Tampa\u2019s most established IT training providers — WIOA-approved programs in full-stack development, cybersecurity, cloud, and digital marketing.',courses:[{name:'Full Stack Web App Development',duration:'20 weeks',price:13500,mode:'Hybrid'},{name:'Cyber Security Specialist',duration:'16 weeks',price:10500,mode:'Hybrid'},{name:'Cloud Integration Specialist',duration:'12 weeks',price:8500,mode:'Online'},{name:'Digital Marketing Specialist',duration:'16 weeks',price:8900,mode:'Online'}],
 instructors:[
 {name:'Michael Rivera',title:'Lead Full-Stack Instructor',avatar:av(0),bio:'Former Senior Engineer at Accenture with 12+ years building production web applications. Specializes in React, Node.js, and cloud-native architecture.',exp:'12 yrs',rating:4.9,students:480,certs:['AWS Certified','MERN Stack']},
 {name:'Sarah Chen',title:'Cybersecurity Instructor',avatar:av(1),bio:'CISSP-certified security professional with 10 years in SOC operations and incident response. Former DoD contractor.',exp:'10 yrs',rating:4.9,students:320,certs:['CISSP','CompTIA Security+']},
 {name:'David Park',title:'Cloud Architecture Instructor',avatar:av(2),bio:'AWS Solutions Architect and former DevOps lead at a Fortune 500 healthcare company. Teaches cloud integration and infrastructure-as-code.',exp:'9 yrs',rating:4.8,students:265,certs:['AWS SA Pro','Terraform']}
 ]},
-{id:'act',name:'Access Computer Training',category:'it',icon:'code',c1:'#2563EB',c2:'#1E3A8A',img:IMG.coding_screen,rating:4.9,reviews:187,price:1645,originalPrice:1895,discount:13,discountLabel:'Fall 2026: 13% off',lat:27.9656,lng:-82.4472,verified:true,format:'inperson',address:'Tampa, FL',desc:'Live instructor-led CompTIA certification with max 12 students per class. All-inclusive pricing with exam vouchers and retake assurance.',courses:[{name:'CompTIA A+ Certification',duration:'92 hours',price:1645,mode:'In-person'},{name:'CompTIA Security+ Certification',duration:'60 hours',price:2495,mode:'In-person'},{name:'Network & Security Professional',duration:'212 hours',price:4895,mode:'In-person'}],
+{id:'act',name:'Access Computer Training',category:'it',icon:'code',c1:'#2563EB',c2:'#1E3A8A',img:IMG.coding_screen,rating:4.9,reviews:187,price:1645,originalPrice:1895,discount:13,discountLabel:'Fall 2026: 13% off',lat:27.9656,lng:-82.4472,verified:true,format:'inperson',address:'Tampa, FL',pilot:true,placementRate:88,avgSalary:62000,hiringPartners:['Raytheon','Jabil','HCA Healthcare','Publix IT'],skills:['CompTIA A+','Network+','Security+','CySA+'],desc:'Live instructor-led CompTIA certification with max 12 students per class. All-inclusive pricing with exam vouchers and retake assurance.',courses:[{name:'CompTIA A+ Certification',duration:'92 hours',price:1645,mode:'In-person'},{name:'CompTIA Security+ Certification',duration:'60 hours',price:2495,mode:'In-person'},{name:'Network & Security Professional',duration:'212 hours',price:4895,mode:'In-person'}],
 instructors:[
 {name:'Robert Martinez',title:'CompTIA Certified Instructor',avatar:av(3),bio:'15 years of IT training experience. Has prepared over 1,200 students for CompTIA A+, Network+, and Security+ certification exams.',exp:'15 yrs',rating:5.0,students:1240,certs:['CompTIA A+','Network+','Security+']},
 {name:'Jennifer Wells',title:'Security+ SME',avatar:av(4),bio:'Former DoD contractor with 8 years of hands-on security operations. Specializes in helping career changers enter cybersecurity.',exp:'8 yrs',rating:4.9,students:380,certs:['Security+','CySA+']}
 ]},
-{id:'nh',name:'New Horizons Computer Learning Center',category:'it',icon:'code',c1:'#1D4ED8',c2:'#1E3A8A',img:IMG.server_room,rating:4.6,reviews:224,price:2495,lat:27.9643,lng:-82.5079,verified:true,format:'hybrid',address:'5402 W Laurel St, Tampa',desc:'Global IT training franchise with a Tampa location offering vendor-authorized courses in CompTIA, Cisco, Microsoft, and project management.',courses:[{name:'CompTIA A+',duration:'2 weeks',price:2495,mode:'Hybrid'},{name:'CompTIA Security+',duration:'1 week',price:2495,mode:'Hybrid'},{name:'Cisco CCNA',duration:'2 weeks',price:3295,mode:'In-person'}],
+{id:'nh',name:'New Horizons Computer Learning Center',category:'it',icon:'code',c1:'#1D4ED8',c2:'#1E3A8A',img:IMG.server_room,rating:4.6,reviews:224,price:2495,lat:27.9643,lng:-82.5079,verified:true,format:'hybrid',address:'5402 W Laurel St, Tampa',pilot:true,placementRate:82,avgSalary:68000,hiringPartners:['Cisco','Microsoft','Deloitte','Nielsen'],skills:['CompTIA','Cisco CCNA','Microsoft Azure','PMP'],desc:'Global IT training franchise with a Tampa location offering vendor-authorized courses in CompTIA, Cisco, Microsoft, and project management.',courses:[{name:'CompTIA A+',duration:'2 weeks',price:2495,mode:'Hybrid'},{name:'CompTIA Security+',duration:'1 week',price:2495,mode:'Hybrid'},{name:'Cisco CCNA',duration:'2 weeks',price:3295,mode:'In-person'}],
 instructors:[
 {name:'Anthony DeLuca',title:'Cisco & Networking Lead',avatar:av(5),bio:'CCIE-certified with 18 years in enterprise networking. Has taught Cisco CCNA and CCNP at New Horizons since 2010.',exp:'18 yrs',rating:4.8,students:860,certs:['CCIE','CCNP']},
 {name:'Priya Sharma',title:'Microsoft Solutions Instructor',avatar:av(6),bio:'Microsoft Certified Trainer specializing in Azure, Windows Server, and Microsoft 365 administration.',exp:'11 yrs',rating:4.7,students:520,certs:['MCT','Azure Admin']}
 ]},
-{id:'ctt',name:'Center for Technology Training',category:'it',icon:'code',c1:'#60A5FA',c2:'#2563EB',img:IMG.computer_lab,rating:4.7,reviews:156,price:1895,lat:27.9556,lng:-82.4622,verified:true,format:'hybrid',address:'1300 N Westshore Blvd, Tampa',desc:'Family-owned and operated technology school in Tampa since 1997. CompTIA A+/Network+/Security+, Cisco CCNA, CISSP, ethical hacking, and Microsoft certifications.',courses:[{name:'CompTIA A+ / Network+',duration:'10 weeks',price:1895,mode:'Hybrid'},{name:'Cyber Security Specialist',duration:'12 weeks',price:2495,mode:'Hybrid'},{name:'CISSP Certification Prep',duration:'8 weeks',price:3295,mode:'Hybrid'}],
+{id:'ctt',name:'Center for Technology Training',category:'it',icon:'code',c1:'#60A5FA',c2:'#2563EB',img:IMG.computer_lab,rating:4.7,reviews:156,price:1895,lat:27.9556,lng:-82.4622,verified:true,format:'hybrid',address:'1300 N Westshore Blvd, Tampa',pilot:true,placementRate:85,avgSalary:65000,hiringPartners:['USAA','Tech Data','Tampa General Hospital'],skills:['CompTIA','CISSP','CCNA','Ethical Hacking'],desc:'Family-owned and operated technology school in Tampa since 1997. CompTIA A+/Network+/Security+, Cisco CCNA, CISSP, ethical hacking, and Microsoft certifications.',courses:[{name:'CompTIA A+ / Network+',duration:'10 weeks',price:1895,mode:'Hybrid'},{name:'Cyber Security Specialist',duration:'12 weeks',price:2495,mode:'Hybrid'},{name:'CISSP Certification Prep',duration:'8 weeks',price:3295,mode:'Hybrid'}],
 instructors:[
 {name:'Karen Mitchell',title:'Founder & Lead Instructor',avatar:av(7),bio:'Founded CTT in 1997. Certified in CompTIA, Microsoft, and Cisco. Known for hands-on teaching style and personalized career guidance.',exp:'28 yrs',rating:4.9,students:2100,certs:['CompTIA','MCT','CCNA']},
 {name:'James O\'Brien',title:'Ethical Hacking Instructor',avatar:av(8),bio:'OSCP-certified penetration tester with a background in red team operations for financial services firms.',exp:'12 yrs',rating:4.8,students:340,certs:['OSCP','CISSP']}
@@ -1093,7 +1117,7 @@ instructors:[
 ]}
 ];
 
-const state={view:'home',query:'',category:'all',format:'all',maxDistance:25,verified:'all',sort:'relevance',activeProvider:null,selectedCourse:0,modalTab:'courses',viewMode:'grid',compareIds:[]};
+const state={view:'home',query:'',category:'all',format:'all',maxDistance:25,verified:'all',sort:'relevance',activeProvider:null,selectedCourse:0,modalTab:'courses',viewMode:'grid',compareIds:[],activeSubcat:'all'};
 
 function haversine(la1,lo1,la2,lo2){const R=3958.8;const dLa=(la2-la1)*Math.PI/180;const dLo=(lo2-lo1)*Math.PI/180;const a=Math.sin(dLa/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))}
 function distanceFor(p){return haversine(USER_LOCATION.lat,USER_LOCATION.lng,p.lat,p.lng)}
@@ -1107,14 +1131,15 @@ function providersIn(catId){return PROVIDERS.filter(p=>p.category===catId)}
 function go(view){state.view=view;document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));const t=document.getElementById('view-'+view);if(t){t.classList.add('on');window.scrollTo({top:0,behavior:'instant'})}document.querySelectorAll('.nav-link[data-nav]').forEach(a=>{a.classList.toggle('on',a.dataset.nav===view)});history.replaceState(null,'','#'+view);if(view==='search')renderResults()}
 function toggleMobileNav(){const nav=document.getElementById('mainNav');const h=getComputedStyle(nav).display==='none'||nav.style.display==='flex';if(h&&nav.style.display!=='flex'){nav.style.cssText='display:flex;position:fixed;top:var(--header-h);left:0;right:0;background:var(--surface);flex-direction:column;align-items:stretch;padding:12px;gap:4px;border-bottom:1px solid var(--border);box-shadow:var(--shadow-lg);z-index:190'}else{nav.style.cssText=''}}
 
-/* IMG CARD — now with compare checkbox (optional) */
+/* IMG CARD */
 function imgCard(p,opts){
   opts=opts||{};
   const cat=categoryOf(p.category);const dist=distanceFor(p);
   const hasDisc=p.discount&&p.discount>0&&p.originalPrice;
   const showCompare=!!opts.showCompare;
   const isSelected=state.compareIds.includes(p.id);
-  return `<article class="img-card ${isSelected?'selected':''}" onclick="openProvider('${p.id}')">
+  const isPilot=!!p.pilot;
+  return `<article class="img-card ${isSelected?'selected':''} ${isPilot?'pilot':''}" onclick="openProvider('${p.id}')">
     <div class="img-card-media">
       <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy" />
       ${p.verified?`<span class="verified-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Verified</span>`:`<span class="pending-chip">Pending</span>`}
@@ -1124,10 +1149,11 @@ function imgCard(p,opts){
           <span class="cc-box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
           Compare
         </button>
-      `:(hasDisc?`<span class="promo-chip">${p.discount}% off</span>`:'')}
+      `:isPilot?`<span class="pilot-chip"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7l3-7Z"/></svg>Pilot</span>`:(hasDisc?`<span class="promo-chip">${p.discount}% off</span>`:'')}
+      ${p.placementRate?`<span class="job-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>${p.placementRate}% placed</span>`:''}
     </div>
     <div class="img-card-body">
-      <div class="img-card-cat">${cat.name}</div>
+      <div class="img-card-cat">${cat.name}${isPilot?`<span class="pilot-badge" style="height:16px;padding:0 6px;font-size:8.5px">Pilot vertical</span>`:''}</div>
       <div class="img-card-title">${escapeHtml(p.name)}</div>
       <div class="img-card-stars"><span class="stars">★★★★★</span><b>${p.rating.toFixed(1)}</b><span style="color:var(--muted-2)">(${p.reviews})</span></div>
       <div class="img-card-foot">
@@ -1140,33 +1166,38 @@ function imgCard(p,opts){
 
 function catImgCard(c){
   const list=providersIn(c.id);
-  return `<button class="cat-img-card" style="--c1:${c.c1};--c2:${c.c2}" onclick="openCategory('${c.id}')">
+  const isPilot=!!c.pilot;
+  return `<button class="cat-img-card ${isPilot?'pilot':''}" style="--c1:${c.c1};--c2:${c.c2}" onclick="openCategory('${c.id}')">
+    ${isPilot?'<span class="pilot-ribbon">Pilot</span>':''}
     <div class="cat-img-media">
       <img src="${c.cover}" alt="${escapeHtml(c.name)}" loading="lazy" />
       <div class="cat-img-icon">${icon(c.icon,22,2)}</div>
       <div class="cat-img-count"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${list.length}</div>
     </div>
     <div class="cat-img-body">
-      <div class="cat-img-title">${c.name}</div>
-      <div class="cat-img-sub">${list.length} verified provider${list.length===1?'':'s'}</div>
-      <div class="cat-img-explore">Explore <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="cat-img-title">${c.name} ${isPilot?`<span class="pilot-badge">Flagship</span>`:''}</div>
+      <div class="cat-img-sub">${list.length} verified provider${list.length===1?'':'s'}${isPilot?' · Live pilot':''}</div>
+      <div class="cat-img-explore">${isPilot?'Explore pilot':'Explore'} <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
     </div>
   </button>`;
 }
 
 function renderHeroCards(){
-  const picks=['cc','baycare','pm','npti'];
+  // Prioritize IT providers in hero — pilot vertical
+  const picks=['cc','act','ctt','cyberfl'];
   document.getElementById('heroCards').innerHTML=picks.map(id=>{
     const p=PROVIDERS.find(x=>x.id===id);if(!p)return'';
     const cat=categoryOf(p.category);const dist=distanceFor(p);
-    return `<article class="img-card" onclick="openProvider('${p.id}')">
+    const isPilot=!!p.pilot;
+    return `<article class="img-card ${isPilot?'pilot':''}" onclick="openProvider('${p.id}')">
       <div class="img-card-media">
         <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy" />
         ${p.verified?`<span class="verified-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Verified</span>`:''}
         <span class="dist-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>${fmtDist(dist)}</span>
+        ${isPilot?`<span class="pilot-chip"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7l3-7Z"/></svg>Pilot</span>`:''}
       </div>
       <div class="img-card-body">
-        <div class="img-card-cat">${cat.name}</div>
+        <div class="img-card-cat">${cat.name}${isPilot?`<span class="pilot-badge" style="height:16px;padding:0 6px;font-size:8.5px">Flagship</span>`:''}</div>
         <div class="img-card-title">${escapeHtml(p.name)}</div>
         <div class="img-card-stars"><span class="stars">★★★★★</span><b>${p.rating.toFixed(1)}</b></div>
         <div class="img-card-foot"><div class="img-card-price">From <b>${fmtPrice(p.price)}</b></div></div>
@@ -1181,7 +1212,16 @@ function renderQuickChips(){
     <div class="qc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
     <div class="quick-chip-content"><b>All Categories</b><span>${PROVIDERS.length} providers</span></div>
   </button>`;
-  const catChips=CATEGORIES.map(c=>{
+  const itChip=(()=>{
+    const c=CATEGORIES[0];const cnt=providersIn(c.id).length;
+    return `<button class="quick-chip pilot ${state.category===c.id?'on':''}" data-cat="${c.id}" onclick="setCategory('${c.id}')">
+      <img src="${c.cover}" alt="" />
+      <div class="qc-pilot">★ Pilot</div>
+      <div class="qc-icon">${icon(c.icon,14,2)}</div>
+      <div class="quick-chip-content"><b>${c.name}</b><span>${cnt} providers · Flagship</span></div>
+    </button>`;
+  })();
+  const restChips=CATEGORIES.slice(1).map(c=>{
     const cnt=providersIn(c.id).length;
     return `<button class="quick-chip ${state.category===c.id?'on':''}" data-cat="${c.id}" onclick="setCategory('${c.id}')">
       <img src="${c.cover}" alt="" />
@@ -1189,7 +1229,7 @@ function renderQuickChips(){
       <div class="quick-chip-content"><b>${c.name}</b><span>${cnt} provider${cnt===1?'':'s'}</span></div>
     </button>`;
   }).join('');
-  document.getElementById('quickChips').innerHTML=allChip+catChips;
+  document.getElementById('quickChips').innerHTML=allChip+itChip+restChips;
 }
 
 function renderHome(){
@@ -1197,68 +1237,132 @@ function renderHome(){
   document.getElementById('homeCategory').innerHTML='<option value="all">All Categories</option>'+opts;
   document.getElementById('searchCategory').innerHTML='<option value="all">All Categories</option>'+opts;
   renderHeroCards();
-  const top=[...PROVIDERS].sort((a,b)=>(b.rating*(b.verified?1.02:1))-(a.rating*(a.verified?1.02:1))).slice(0,5);
+  // Top rated: prioritize IT pilot providers
+  const itTop=PROVIDERS.filter(p=>p.category==='it').sort((a,b)=>b.rating-a.rating).slice(0,3);
+  const otherTop=[...PROVIDERS].filter(p=>p.category!=='it').sort((a,b)=>b.rating-a.rating).slice(0,2);
+  const top=[...itTop,...otherTop];
   document.getElementById('topProviders').innerHTML=top.map(p=>imgCard(p)).join('');
-  document.getElementById('categoryGrid').innerHTML=CATEGORIES.map(catImgCard).join('');
+  // Categories: IT first
+  const sorted=[...CATEGORIES].sort((a,b)=>(b.pilot?1:0)-(a.pilot?1:0));
+  document.getElementById('categoryGrid').innerHTML=sorted.map(catImgCard).join('');
 }
 
 function runHomeSearch(){const q=document.getElementById('homeQuery').value.trim();const c=document.getElementById('homeCategory').value;const d=parseInt(document.getElementById('homeDistance').value,10);state.query=q;state.category=c;state.maxDistance=d;document.getElementById('searchQuery').value=q;document.getElementById('searchCategory').value=c;document.getElementById('searchDistance').value=String(d);document.getElementById('rangeDistance').value=Math.min(d,50);onRangeChange(Math.min(d,50));renderQuickChips();go('search');renderResults()}
 function applySearch(){state.query=document.getElementById('searchQuery').value.trim();state.category=document.getElementById('searchCategory').value;state.maxDistance=parseInt(document.getElementById('searchDistance').value,10);renderQuickChips();renderResults()}
 
-/* ============ CATEGORY PAGE — WITH COMPARE ============ */
+/* CATEGORY PAGE */
 function openCategory(id){
   const c=categoryOf(id);const list=providersIn(id).sort((a,b)=>{if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return b.reviews-a.reviews});
   document.getElementById('catCrumb').textContent=c.name;
-  document.getElementById('catHeroTitle').textContent=c.name;
+  const titleHTML=document.getElementById('catHeroTitle');
+  titleHTML.innerHTML=c.name+(c.pilot?` <span class="pilot-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7l3-7Z"/></svg>Flagship Pilot</span>`:'');
   document.getElementById('catHeroDesc').textContent=c.desc;
   document.getElementById('catOrb').style.background=`radial-gradient(circle,${c.c1},transparent 70%)`;
   document.getElementById('catHeroIcon').style.background=`linear-gradient(140deg,${c.c1},${c.c2})`;
   document.getElementById('catHeroIcon').innerHTML=icon(c.icon,34,1.8);
+
+  // Subcategory row (only for pilot verticals like IT)
+  const subcatRow=document.getElementById('subcatRow');
+  if(c.subcats&&c.subcats.length){
+    state.activeSubcat='all';
+    subcatRow.innerHTML=`<button class="subcat-pill on" data-sub="all" onclick="setSubcat('all')">All</button>`+c.subcats.map(s=>`<button class="subcat-pill" data-sub="${escapeHtml(s)}" onclick="setSubcat('${escapeHtml(s)}')">${escapeHtml(s)}</button>`).join('');
+  } else {
+    subcatRow.innerHTML='';
+  }
+
   const vc=list.filter(p=>p.verified).length;const ar=list.length?(list.reduce((s,p)=>s+p.rating,0)/list.length).toFixed(1):'—';const mp=list.length?Math.min(...list.map(p=>p.price)):0;
   document.getElementById('catHeroStats').innerHTML=`<div class="s"><b>${list.length}</b><span>Providers</span></div><div class="s"><b>${vc}</b><span>Verified</span></div><div class="s"><b>${ar}<span style="font-size:15px">★</span></b><span>Avg. Rating</span></div><div class="s"><b>${fmtPrice(mp)}</b><span>Starting From</span></div>`;
+
   document.getElementById('catRankSub').textContent=`Select 2–4 providers below to compare price, rating, format, courses, and instructors side-by-side.`;
+
+  // Pilot banner (only for IT)
+  const pilotEl=document.getElementById('catPilotBanner');
+  if(c.pilot){
+    const avgPlacement=Math.round(list.filter(p=>p.placementRate).reduce((s,p)=>s+p.placementRate,0)/list.filter(p=>p.placementRate).length);
+    const avgSalary=Math.round(list.filter(p=>p.avgSalary).reduce((s,p)=>s+p.avgSalary,0)/list.filter(p=>p.avgSalary).length);
+    pilotEl.innerHTML=`<div class="pilot-banner">
+      <div class="pilot-banner-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7l3-7Z"/></svg></div>
+      <div class="pilot-banner-text"><b>Flagship pilot vertical — IT & Technology</b><span>This is the launch category for EduFinder. All providers are fully verified, and their outcomes are monitored as part of the Tampa Bay pilot.</span></div>
+      <div class="pilot-banner-stats">
+        <div class="ps"><b>${avgPlacement}%</b><span>Avg. placement</span></div>
+        <div class="ps"><b>$${(avgSalary/1000).toFixed(0)}K</b><span>Avg. salary</span></div>
+      </div>
+    </div>`;
+  } else {
+    pilotEl.innerHTML='';
+  }
+
   const promoEl=document.getElementById('catPromo');const discounts=list.filter(p=>p.discount&&p.discount>0);
   if(discounts.length>0){const best=discounts.sort((a,b)=>b.discount-a.discount)[0];promoEl.innerHTML=`<div class="promo-banner"><div class="promo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="promo-text"><b>Seasonal discounts available</b><span>${discounts.length} provider${discounts.length>1?'s':''} in this category currently offer seasonal promotions. Best available: <strong>${best.discount}% off</strong> at ${escapeHtml(best.name)}.</span></div><span class="promo-tag">Save up to ${best.discount}%</span></div>`}else{promoEl.innerHTML=''}
 
-  // Filter out any compare IDs that no longer belong to this category
   state.compareIds = state.compareIds.filter(cid => list.some(p => p.id === cid));
+  state.fullCategoryList = list;
 
-  document.getElementById('catRankList').innerHTML=list.length?list.map(p=>imgCard(p,{showCompare:true})).join(''):`<div class="no-results" style="grid-column:1/-1"><h3>No providers yet</h3><p>We're onboarding providers in this category. Check back soon.</p></div>`;
-  renderCompareBar();
+  renderCategoryList();
+  renderCompareDock();
   go('category');
 }
 
-/* ===== COMPARE BAR ===== */
-function renderCompareBar(){
-  const bar=document.getElementById('catCompareBar');
-  if(!bar)return;
-  if(state.compareIds.length===0){bar.classList.add('hidden');bar.innerHTML='';return}
-  bar.classList.remove('hidden');
+function setSubcat(sub){
+  state.activeSubcat=sub;
+  document.querySelectorAll('.subcat-pill').forEach(b=>b.classList.toggle('on',b.dataset.sub===sub));
+  renderCategoryList();
+}
+
+function getFilteredCategoryList(){
+  let list=state.fullCategoryList||[];
+  if(state.activeSubcat && state.activeSubcat!=='all'){
+    const map={
+      'Programming':['Full-Stack','Full Stack','Web','Software','Python','JavaScript','MERN','React','Java'],
+      'Cybersecurity':['Security','Cyber','CISSP','Ethical','Penetration','OSCP'],
+      'Cloud & DevOps':['Cloud','DevOps','AWS','Azure','Kubernetes','Terraform'],
+      'Data Science':['Data','AI','Machine Learning','Analytics']
+    };
+    const keys=map[state.activeSubcat]||[];
+    list=list.filter(p=>{
+      const hay=(p.name+' '+(p.desc||'')+' '+(p.courses||[]).map(c=>c.name).join(' ')+' '+(p.skills||[]).join(' ')).toLowerCase();
+      return keys.some(k=>hay.includes(k.toLowerCase()));
+    });
+  }
+  return list;
+}
+
+function renderCategoryList(){
+  const list=getFilteredCategoryList();
+  const cat=categoryOf(state.category);
+  document.getElementById('catListTitle').textContent = state.activeSubcat && state.activeSubcat!=='all' 
+    ? `${state.activeSubcat} providers` 
+    : 'Most trusted providers';
+  const el=document.getElementById('catRankList');
+  if(!list.length){
+    el.innerHTML=`<div class="no-results" style="grid-column:1/-1"><h3>No providers in this subcategory yet</h3><p>Try another subcategory or clear the filter.</p></div>`;
+    return;
+  }
+  el.innerHTML=list.map(p=>imgCard(p,{showCompare:true})).join('');
+}
+
+/* ===== COMPARE — FLOATING DOCK ===== */
+function renderCompareDock(){
+  const dock=document.getElementById('compareDock');
+  const count=state.compareIds.length;
+  document.getElementById('compareDockCount').textContent=count;
+  if(count===0){dock.classList.remove('on');return}
+  dock.classList.add('on');
   const picks=state.compareIds.map(id=>PROVIDERS.find(p=>p.id===id)).filter(Boolean);
-  bar.innerHTML=`
-    <div class="cat-compare-info">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10"/><path d="M5 7h14l-2 6a3 3 0 0 1-6 0L9 7"/></svg>
-      <b>${picks.length}</b> selected for comparison
-    </div>
-    <div class="cat-compare-chips">
-      ${picks.map(p=>`
-        <span class="cat-compare-chip">
-          <img src="${p.img}" alt="" />
-          ${escapeHtml(p.name.length>24?p.name.slice(0,24)+'…':p.name)}
-          <button class="rm" onclick="toggleCompare('${p.id}')" aria-label="Remove">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
-          </button>
-        </span>
-      `).join('')}
-    </div>
-    <div class="cat-compare-actions">
-      <button class="btn btn-ghost" onclick="clearCompare()">Clear</button>
-      <button class="btn btn-green" onclick="openCompare()" ${picks.length<2?'disabled style="opacity:.5;cursor:not-allowed"':''}>
-        Compare ${picks.length}
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  document.getElementById('compareDockChips').innerHTML=picks.map(p=>`
+    <span class="compare-dock-chip">
+      <img src="${p.img}" alt="" />
+      ${escapeHtml(p.name.length>22?p.name.slice(0,22)+'…':p.name)}
+      <button class="rm" onclick="event.stopPropagation();toggleCompare('${p.id}')" aria-label="Remove">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
       </button>
-    </div>
-  `;
+    </span>
+  `).join('');
+  // Disable compare button if <2
+  const btn=dock.querySelector('.btn-green');
+  if(btn) btn.disabled = count<2;
+  if(btn) btn.style.opacity = count<2?'.5':'1';
+  if(btn) btn.style.cursor = count<2?'not-allowed':'pointer';
 }
 
 function toggleCompare(id){
@@ -1269,33 +1373,25 @@ function toggleCompare(id){
     if(state.compareIds.length>=4){showToast('You can compare up to 4 providers at a time.');return}
     state.compareIds.push(id);
   }
-  // Re-render category grid + bar
-  if(state.view==='category'){
-    const cat=state.category;
-    const list=providersIn(cat).sort((a,b)=>{if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return b.reviews-a.reviews});
-    document.getElementById('catRankList').innerHTML=list.map(p=>imgCard(p,{showCompare:true})).join('');
-  }
-  renderCompareBar();
+  // Re-render any grid that shows compare buttons
+  if(state.view==='category') renderCategoryList();
+  if(state.view==='search') renderResults();
+  renderCompareDock();
 }
 
 function clearCompare(){
   state.compareIds=[];
-  if(state.view==='category'){
-    const cat=state.category;
-    const list=providersIn(cat).sort((a,b)=>{if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return b.reviews-a.reviews});
-    document.getElementById('catRankList').innerHTML=list.map(p=>imgCard(p,{showCompare:true})).join('');
-  }
-  renderCompareBar();
+  if(state.view==='category') renderCategoryList();
+  if(state.view==='search') renderResults();
+  renderCompareDock();
   showToast('Comparison cleared.');
 }
 
-/* ===== COMPARE MODAL ===== */
 function openCompare(){
   if(state.compareIds.length<2){showToast('Select at least 2 providers to compare.');return}
   const picks=state.compareIds.map(id=>PROVIDERS.find(p=>p.id===id)).filter(Boolean);
   if(!picks.length)return;
 
-  // Compute best values for highlighting
   const bestRating=Math.max(...picks.map(p=>p.rating));
   const bestPrice=Math.min(...picks.map(p=>p.price===0?0:p.price));
   const mostCourses=Math.max(...picks.map(p=>p.courses.length));
@@ -1319,6 +1415,11 @@ function openCompare(){
     {label:'Lead instructor',get:p=>{const ins=(p.instructors||[])[0];return ins?`<div class="instructor-mini"><img src="${ins.avatar}" alt=""/><div class="im-info"><b>${escapeHtml(ins.name)}</b><span>${escapeHtml(ins.title)}</span></div></div>`:'—'}},
     {label:'Certifications',get:p=>{const ins=(p.instructors||[])[0];return ins&&ins.certs&&ins.certs.length?`<div class="tag-list">${ins.certs.map(c=>`<span class="t">${escapeHtml(c)}</span>`).join('')}</div>`:'—'}},
   ];
+  if(picks.some(p=>p.placementRate)){
+    rows.push({label:'Placement rate',get:p=>p.placementRate?`<b style="color:var(--green)">${p.placementRate}%</b>`:'—',bestFn:p=>p.placementRate===Math.max(...picks.filter(x=>x.placementRate).map(x=>x.placementRate))});
+    rows.push({label:'Avg. salary',get:p=>p.avgSalary?`<b style="color:var(--text)">$${p.avgSalary.toLocaleString('en-US')}</b>`:'—',bestFn:p=>p.avgSalary===Math.max(...picks.filter(x=>x.avgSalary).map(x=>x.avgSalary))});
+    rows.push({label:'Hiring partners',get:p=>p.hiringPartners&&p.hiringPartners.length?`<div class="tag-list">${p.hiringPartners.slice(0,4).map(h=>`<span class="t">${escapeHtml(h)}</span>`).join('')}</div>`:'—'});
+  }
 
   document.getElementById('compareModalContent').innerHTML=`
     <div class="compare-header">
@@ -1332,59 +1433,44 @@ function openCompare(){
         </button>
       </div>
     </div>
-
     <div class="compare-scroll">
       <table class="compare-table">
-        <thead>
-          <tr>
-            <th class="row-label">Attribute</th>
-            ${picks.map(p=>`
-              <th class="compare-provider-head">
-                <img class="cph-img" src="${p.img}" alt="${escapeHtml(p.name)}" />
-                <div class="cph-name">${escapeHtml(p.name)}</div>
-                <div class="cph-cat">${categoryOf(p.category).name}</div>
-                <div class="cph-rating"><span class="stars">★★★★★</span><b>${p.rating.toFixed(1)}</b> · ${p.reviews}</div>
-                ${p.verified?`<div class="cph-verified"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Verified</div>`:''}
-                <div class="cph-remove" onclick="toggleCompare('${p.id}');closeCompare();renderCompareBar();">Remove from comparison</div>
-              </th>
-            `).join('')}
-          </tr>
-        </thead>
+        <thead><tr>
+          <th class="row-label">Attribute</th>
+          ${picks.map(p=>`
+            <th class="compare-provider-head">
+              <img class="cph-img" src="${p.img}" alt="${escapeHtml(p.name)}" />
+              ${p.pilot?`<div style="position:absolute;top:12px;left:12px"><span class="pilot-badge">Pilot</span></div>`:''}
+              <div class="cph-name">${escapeHtml(p.name)}</div>
+              <div class="cph-cat">${categoryOf(p.category).name}</div>
+              <div class="cph-rating"><span class="stars">★★★★★</span><b>${p.rating.toFixed(1)}</b> · ${p.reviews}</div>
+              ${p.verified?`<div class="cph-verified"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Verified</div>`:''}
+              <div class="cph-remove" onclick="toggleCompare('${p.id}');closeCompare();">Remove</div>
+            </th>
+          `).join('')}
+        </tr></thead>
         <tbody>
           ${rows.map(r=>`
-            <tr>
-              <td class="row-label">${r.label}</td>
-              ${picks.map(p=>{
-                const val=r.get(p);
-                const isBest=r.bestFn?r.bestFn(p):false;
-                const cls=isBest?'best':(r.label==='Rating'||r.label==='Price (from)'?'highlight':'');
-                return `<td class="${cls}">${val}</td>`;
-              }).join('')}
+            <tr><td class="row-label">${r.label}</td>
+              ${picks.map(p=>{const val=r.get(p);const isBest=r.bestFn?r.bestFn(p):false;const cls=isBest?'best':(r.label==='Rating'||r.label==='Price (from)'||r.label==='Placement rate'?'highlight':'');return `<td class="${cls}">${val}</td>`}).join('')}
             </tr>
           `).join('')}
         </tbody>
       </table>
-
       <div class="compare-summary">
-        <div class="cs-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-        </div>
+        <div class="cs-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div>
         <div class="cs-text">
           <b>Highlighted cells show the top performer in each row.</b>
-          <span>Ratings, review counts, distance, number of courses and instructors are all shown. Payment never affects ranking — only verified data is compared here.</span>
+          <span>Ratings, review counts, distance, placement rate, and salaries are all shown. Payment never affects ranking — only verified data is compared here.</span>
         </div>
       </div>
     </div>
   `;
-
   document.getElementById('compareBackdrop').classList.add('on');
   document.body.style.overflow='hidden';
 }
 
-function closeCompare(){
-  document.getElementById('compareBackdrop').classList.remove('on');
-  document.body.style.overflow='';
-}
+function closeCompare(){document.getElementById('compareBackdrop').classList.remove('on');document.body.style.overflow=''}
 
 function renderFilters(){
   const cc={};PROVIDERS.forEach(p=>{cc[p.category]=(cc[p.category]||0)+1});
@@ -1405,14 +1491,14 @@ function filteredProviders(){
     if(state.format!=='all'&&p.format!==state.format)return false;
     if(state.verified==='verified'&&!p.verified)return false;
     if(distanceFor(p)>state.maxDistance&&state.maxDistance<50)return false;
-    if(q){const h=(p.name+' '+(p.tagline||'')+' '+(p.desc||'')+' '+(p.address||'')+' '+p.courses.map(c=>c.name).join(' ')+' '+(p.instructors||[]).map(i=>i.name+' '+i.title).join(' ')).toLowerCase();if(!h.includes(q))return false}
+    if(q){const h=(p.name+' '+(p.tagline||'')+' '+(p.desc||'')+' '+(p.address||'')+' '+p.courses.map(c=>c.name).join(' ')+' '+(p.instructors||[]).map(i=>i.name+' '+i.title).join(' ')+' '+(p.skills||[]).join(' ')).toLowerCase();if(!h.includes(q))return false}
     return true;
   });
   switch(state.sort){
     case'rating':list.sort((a,b)=>b.rating-a.rating);break;
     case'distance':list.sort((a,b)=>distanceFor(a)-distanceFor(b));break;
     case'price':list.sort((a,b)=>a.price-b.price);break;
-    default:list.sort((a,b)=>{if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return distanceFor(a)-distanceFor(b)});
+    default:list.sort((a,b)=>{if(a.pilot!==b.pilot)return a.pilot?-1:1;if(a.verified!==b.verified)return a.verified?-1:1;if(b.rating!==a.rating)return b.rating-a.rating;return distanceFor(a)-distanceFor(b)});
   }
   return list;
 }
@@ -1437,7 +1523,7 @@ function renderFeatured(list){
         </span>
       </div>
       <div class="featured-body">
-        <div class="fb-cat">${cat.name}</div>
+        <div class="fb-cat">${cat.name} ${top.pilot?'<span class="pilot-badge">Pilot vertical</span>':''}</div>
         <h3>${escapeHtml(top.name)}</h3>
         <p class="fb-desc">${escapeHtml(top.desc)}</p>
         <div class="featured-stats">
@@ -1446,6 +1532,7 @@ function renderFeatured(list){
           <span class="fs"><b>${formatLabel(top.format)}</b></span>
           <span class="fs"><b>${top.courses.length}</b> courses</span>
           <span class="fs"><b>${(top.instructors||[]).length}</b> instructors</span>
+          ${top.placementRate?`<span class="fs" style="color:var(--green)"><b style="color:var(--green)">${top.placementRate}%</b> placed</span>`:''}
         </div>
         <div class="featured-actions">
           <div class="price-tag">
@@ -1485,7 +1572,8 @@ function renderResults(){
     </div>`;
     return;
   }
-  g.innerHTML=list.map(p=>imgCard(p)).join('');
+  // Search view: IT pilot providers get compare enabled too
+  g.innerHTML=list.map(p=>imgCard(p,{showCompare:true})).join('');
 }
 
 function quickSearch(q){state.query=q;state.category='all';state.maxDistance=50;state.verified='all';state.format='all';document.getElementById('searchQuery').value=q;document.getElementById('searchCategory').value='all';document.getElementById('searchDistance').value='50';document.getElementById('rangeDistance').value=50;onRangeChange(50);renderFilters();renderQuickChips();renderResults()}
@@ -1499,12 +1587,7 @@ function openProvider(id){
   document.getElementById('modalBackdrop').classList.add('on');
   document.body.style.overflow='hidden';
 }
-function openEnrollForProvider(p){
-  state.activeProvider=p;state.selectedCourse=0;state.modalTab='courses';
-  renderProviderModal();
-  document.getElementById('modalBackdrop').classList.add('on');
-  document.body.style.overflow='hidden';
-}
+function openEnrollForProvider(p){state.activeProvider=p;state.selectedCourse=0;state.modalTab='courses';renderProviderModal();document.getElementById('modalBackdrop').classList.add('on');document.body.style.overflow='hidden'}
 function switchTab(tab){state.modalTab=tab;renderProviderModal()}
 
 function renderProviderModal(){
@@ -1537,10 +1620,7 @@ function renderProviderModal(){
         <div class="instructor-card">
           <div class="instructor-head">
             <div class="instructor-avatar"><img src="${inst.avatar}" alt="${escapeHtml(inst.name)}" loading="lazy" /></div>
-            <div class="instructor-info">
-              <b>${escapeHtml(inst.name)}</b>
-              <span>${escapeHtml(inst.title)}</span>
-            </div>
+            <div class="instructor-info"><b>${escapeHtml(inst.name)}</b><span>${escapeHtml(inst.title)}</span></div>
           </div>
           <p class="instructor-bio">${escapeHtml(inst.bio)}</p>
           <div class="instructor-stats">
@@ -1554,12 +1634,34 @@ function renderProviderModal(){
     </div>
   `;
 
+  // IT provider enrichment block
+  const enrichBlock = p.placementRate ? `
+    <div class="it-enrichment">
+      <div class="enr"><b>${p.placementRate}%</b><span>Placement rate</span></div>
+      <div class="enr"><b>$${(p.avgSalary/1000).toFixed(0)}K</b><span>Avg. salary</span></div>
+      <div class="enr"><b>${p.courses.length}</b><span>Programs</span></div>
+    </div>
+  ` : '';
+
+  const skillsBlock = p.skills && p.skills.length ? `
+    <div class="skills-row">
+      ${p.skills.map(s=>`<span class="skill">${escapeHtml(s)}</span>`).join('')}
+    </div>
+  ` : '';
+
+  const hiringBlock = p.hiringPartners && p.hiringPartners.length ? `
+    <div class="hiring-row">
+      <span>Hiring partners:</span>
+      ${p.hiringPartners.map(h=>`<span class="hp">${escapeHtml(h)}</span>`).join('')}
+    </div>
+  ` : '';
+
   document.getElementById('modalContent').innerHTML=`
     <button class="modal-close" onclick="closeModal()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-
     <div class="modal-hero">
       <img src="${p.img}" alt="${escapeHtml(p.name)}" />
       ${p.verified?`<span class="verified-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Verified</span>`:''}
+      ${p.pilot?`<span class="pilot-chip-large"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7l3-7Z"/></svg>Flagship Pilot</span>`:''}
       <div class="modal-hero-content">
         <div class="mh-cat">${cat.name}</div>
         <h2>${escapeHtml(p.name)}</h2>
@@ -1570,37 +1672,23 @@ function renderProviderModal(){
         </div>
       </div>
     </div>
-
     <div class="modal-body">
       <div class="modal-intro">
         <p>${escapeHtml(p.desc)}</p>
         ${p.address?`<p style="font-size:12.5px;color:var(--muted);margin-top:10px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:4px"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>${escapeHtml(p.address)}</p>`:''}
         ${hasDisc?`<div style="margin-top:14px"><span class="demo-chip" style="background:rgba(34,197,94,.14);color:#059669"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>${escapeHtml(p.discountLabel)}</span></div>`:''}
       </div>
-
+      ${enrichBlock}
+      ${skillsBlock}
+      ${hiringBlock}
       <div class="modal-tabs">
-        <button class="modal-tab ${state.modalTab==='courses'?'on':''}" onclick="switchTab('courses')">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5V4.5Z"/></svg>
-          Courses
-          <span class="tab-badge">${p.courses.length}</span>
-        </button>
-        <button class="modal-tab ${state.modalTab==='instructors'?'on':''}" onclick="switchTab('instructors')">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
-          Instructors
-          <span class="tab-badge">${instructors.length}</span>
-        </button>
+        <button class="modal-tab ${state.modalTab==='courses'?'on':''}" onclick="switchTab('courses')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5V4.5Z"/></svg>Courses <span class="tab-badge">${p.courses.length}</span></button>
+        <button class="modal-tab ${state.modalTab==='instructors'?'on':''}" onclick="switchTab('instructors')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Instructors <span class="tab-badge">${instructors.length}</span></button>
       </div>
-
-      <div class="modal-tab-content">
-        ${state.modalTab==='courses'?coursesTab:instructorsTab}
-      </div>
+      <div class="modal-tab-content">${state.modalTab==='courses'?coursesTab:instructorsTab}</div>
     </div>
-
     <div class="modal-enroll">
-      <div class="enroll-head">
-        <h4>Request enrollment</h4>
-        <span class="badge-demo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Demo mode</span>
-      </div>
+      <div class="enroll-head"><h4>Request enrollment</h4><span class="badge-demo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Demo mode</span></div>
       <form class="enroll-form" onsubmit="submitEnrollment(event)">
         <div class="field"><label>Full name</label><input id="enName" type="text" placeholder="Jane Doe" required /></div>
         <div class="field"><label>Email</label><input id="enEmail" type="email" placeholder="jane@example.com" required /></div>
